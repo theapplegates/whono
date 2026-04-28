@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const keyPath = join(process.cwd(), 'public/files/Paul_Applegate_0x7DBEBABB94BE26DCA0B148E0F692203AA0A660027A9105CFF0F7392D52B99731_public.asc');
+const keyContent = readFileSync(keyPath, 'utf-8');
+---
+
+<BaseLayout title="PGP Public Key" description="Paul Applegate's PGP public key">
+  <div class="pgp-page">
+    <h1>PGP Public Key</h1>
+    <a
+      class="pgp-download"
+      href="/files/Paul_Applegate_0x7DBEBABB94BE26DCA0B148E0F692203AA0A660027A9105CFF0F7392D52B99731_public.asc"
+      download
+    >
+      Download .asc file
+    </a>
+    <p class="pgp-fingerprint">
+      Fingerprint: <code>7DBEBABB94BE26DCA0B148E0F692203AA0A660027A9105CFF0F7392D52B99731</code>
+    </p>
+    <pre class="pgp-key">{keyContent}</pre>
+    <a
+      class="pgp-download"
+      href="/files/Paul_Applegate_0x7DBEBABB94BE26DCA0B148E0F692203AA0A660027A9105CFF0F7392D52B99731_public.asc"
+      download
+    >
+      Download .asc file
+    </a>
+  </div>
+</BaseLayout>
+
+<style>
+  .pgp-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pgp-fingerprint {
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--faint);
+  }
+
+  .pgp-fingerprint code {
+    word-break: break-all;
+  }
+
+  .pgp-key {
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    padding: 1.25rem;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 6px;
+    background: var(--code-bg, #f5f5f5);
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .pgp-download {
+    font-size: 0.85rem;
+  }
+</style>

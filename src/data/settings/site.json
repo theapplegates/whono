@@ -1,0 +1,21 @@
+{
+  "title": "Astro Themes by Whono",
+  "description": "一个 Astro 主题的展示站：轻量、可维护、可复用。",
+  "defaultLocale": "US",
+  "footer": {
+    "startYear": 2026,
+    "showCurrentYear": true,
+    "copyright": "Living Life Paul Applegate"
+  },
+  "socialLinks": {
+    "github": "https://github.com/theapplegates/astro-whono",
+    "x": "https://twitter.com/papplegate",
+    "email": "me@paulaplegate.com",
+    "presetOrder": {
+      "github": 1,
+      "x": 2,
+      "email": 3
+    },
+    "custom": []
+  }
+}
