@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { createWithBase } from '../../utils/format';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { createWithBase } from '../../../utils/format';
 
 const isDev = import.meta.env.DEV;
 const base = import.meta.env.BASE_URL ?? '/';
@@ -29,15 +29,15 @@ const loadAdminDevState = async () => {
     { default: adminStylesHref }
   ] = await Promise.all([
     import('astro:content'),
-    import('../../lib/theme-settings'),
-    import('../../lib/admin-console/shared'),
-    import('../../components/admin/AdminHomeSection.astro'),
-    import('../../components/admin/AdminPageSection.astro'),
-    import('../../components/admin/AdminSidebarSection.astro'),
-    import('../../components/admin/AdminSiteSection.astro'),
-    import('../../components/admin/AdminUiSection.astro'),
-    import('../../scripts/admin-console/index.ts?url'),
-    import('../../styles/components/admin.css?url')
+    import('../../../lib/theme-settings'),
+    import('../../../lib/admin-console/shared'),
+    import('../../../components/admin/AdminHomeSection.astro'),
+    import('../../../components/admin/AdminPageSection.astro'),
+    import('../../../components/admin/AdminSidebarSection.astro'),
+    import('../../../components/admin/AdminSiteSection.astro'),
+    import('../../../components/admin/AdminUiSection.astro'),
+    import('../../../scripts/admin-console/index.ts?url'),
+    import('../../../styles/components/admin.css?url')
   ]);
 
   const settingsEndpoint = withBase('/api/admin/settings/');
@@ -231,4 +231,3 @@ const AdminUiSection = adminDevState?.AdminUiSection;
     ) : null
   }
 </BaseLayout>
-
