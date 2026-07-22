@@ -1,0 +1,13 @@
+{
+  "introLead": "This is an open-source writing theme and sample content library: it includes Essays, Memo, Archive, and Bits. See the README for usage and configuration.",
+  "introMore": "Find more posts on",
+  "introMoreLinks": [
+    "archive",
+    "tag"
+  ],
+  "showIntroLead": true,
+  "showIntroMore": true,
+  "heroPresetId": "default",
+  "heroImageSrc": null,
+  "heroImageAlt": "Whono theme preview"
+}

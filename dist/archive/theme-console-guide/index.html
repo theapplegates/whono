@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en-US"> <head><script>
+      (() => {
+        // Keep the same theme-preference contract as src/scripts/sidebar-theme.ts to avoid first-paint/runtime state drift.
+        const themeKey = 'theme';
+        const modeKey = 'theme-mode';
+        let storedMode = null;
+        let legacyTheme = null;
+        try {
+          storedMode = localStorage.getItem(modeKey);
+          legacyTheme = localStorage.getItem(themeKey);
+        } catch (_) {}
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const mode = storedMode === 'system' || storedMode === 'dark' || storedMode === 'light'
+          ? storedMode
+          : (legacyTheme === 'dark' || legacyTheme === 'light' ? legacyTheme : 'system');
+        const theme = mode === 'system' ? (prefersDark ? 'dark' : 'light') : mode;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.themeMode = mode;
+      })();
+    </script><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><title>Theme Console Configuration Guide | Astro Themes by Whono</title><meta name="description" content="Covers the scope, page groups, storage targets, and save mechanism of the astro-whono local Theme Console in the development environment."><link rel="canonical" href="https://example.invalid/archive/theme-console-guide/"><meta property="og:site_name" content="Astro Themes by Whono"><meta property="og:title" content="Theme Console Configuration Guide | Astro Themes by Whono"><meta property="og:description" content="Covers the scope, page groups, storage targets, and save mechanism of the astro-whono local Theme Console in the development environment."><meta property="og:url" content="https://example.invalid/archive/theme-console-guide/"><meta property="og:type" content="article"><meta property="og:image" content="https://example.invalid/og.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Theme Console Configuration Guide | Astro Themes by Whono"><meta name="twitter:description" content="Covers the scope, page groups, storage targets, and save mechanism of the astro-whono local Theme Console in the development environment."><meta name="twitter:image" content="https://example.invalid/og.svg"><link rel="stylesheet" href="/_astro/global.78EWSaU1.css"> <meta property="article:published_time" content="2026-04-26T00:00:00.000Z"> <meta property="article:tag" content="Theme Console"><meta property="article:tag" content="Guide"><link rel="stylesheet" href="/_astro/article.CK99G5yR.css"></head> <body class="article-page immersive-page"> <a class="skip-link" href="#content">Skip to content</a> <div class="shell" data-sidebar-divider="default"> <aside id="site-sidebar" class="sidebar"> <a class="sidebar__title sidebar__title--site" href="/" aria-label="Whono home"> <span class="sidebar__title-text">Whono</span> </a>  <div class="sidebar__quote"> A minimal Astro theme<br> for essays, notes, and docs.<br> Designed for reading,<br> open-source.<br>  </div> <ul class="nav sidebar-public-nav"> <li> <a href="/essay/"> <span>Essays</span> <span class="dot" aria-hidden="true"></span> </a> </li><li> <a href="/bits/"> <span>Bits</span> <span class="dot" aria-hidden="true"></span> </a> </li><li> <a href="/memo/"> <span>Memo</span> <span class="dot" aria-hidden="true"></span> </a> </li><li> <a href="/archive/" aria-current="page"> <span>Archive</span> <span class="dot" aria-hidden="true"></span> </a> </li><li> <a href="/about/"> <span>About</span> <span class="dot" aria-hidden="true"></span> </a> </li> </ul>  <div class="sidebar-actions">   <button id="reader-toggle" class="icon-button reader-toggle sidebar-action--rail-hidden" type="button" aria-label="Reading mode" aria-pressed="false" data-tooltip="Reading mode"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-book-open icon icon-book-open"> <path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path>  </svg> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-book icon icon-book-closed"> <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"></path>  </svg> </button> <a class="icon-button rss-link sidebar-action--rail-hidden" href="/archive/rss.xml" aria-label="RSS feed" data-tooltip="RSS feed"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-rss icon"> <path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle>  </svg> </a> <button id="theme-toggle" class="icon-button theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" data-tooltip="Dark mode"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-sun-moon icon icon-system"> <path d="M12 2v2"></path><path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path><path d="M16 12a4 4 0 0 0-4-4"></path><path d="m19 5-1.256 1.256"></path><path d="M20 12h2"></path>  </svg> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-moon icon icon-moon"> <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>  </svg> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-sun icon icon-sun"> <circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>  </svg> </button>   </div> </aside> <div class="divider" aria-hidden="true"></div> <main id="content" class="content" tabindex="-1"> <div class="content__inner">   <div class="article-header reader-exit-anchor"> <h1 class="page-title">Theme Console Configuration Guide</h1> <button id="reader-exit" class="icon-button reader-exit" type="button" aria-label="Exit reading" title="Exit reading" aria-hidden="true" tabindex="-1"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-square-arrow-right-exit icon"> <path d="M10 12h11"></path><path d="m17 16 4-4-4-4"></path><path d="M21 6.344V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1.344"></path>  </svg> </button> <div class="meta-line meta-line--items"> <span class="meta-line__item"> <time datetime="2026-04-26T00:00:00.000Z">Published:2026-04-26</time> </span> <span class="meta-line__item meta-line__item--tags"> <span class="tag">#Theme Console</span><span class="tag">#Guide</span> </span> <span class="meta-line__item meta-line__item--desktop-meta"> 3,425 words
+</span> <span class="meta-line__item meta-line__item--desktop-meta">
+About 11 min
+</span> </div> </div> <div class="prose">  <p>astro-whono ships a local Theme Console for managing theme-level configuration in one place during development.</p>
+<p>The Theme Console entry point is <code>/admin/theme/</code>. It mainly covers site info, the sidebar, the home page, inner-page copy, and a few reading and code-display options, so you can quickly tune the theme settings after forking or cloning.</p>
+<div class="callout note"><p class="callout-title">Development only</p><p><code>/admin/theme/</code> is only writable in the development environment. In production it shows a local-dev notice and offers no write access.</p></div>
+<h2 id="local-startup-and-entry-point">Local startup and entry point</h2>
+<p>Start the project locally with:</p>
+<div class="code-block" data-lang="bash" data-lines="2"><div class="code-toolbar"><span class="code-lang"><svg class="code-lang-icon is-colored" viewBox="0 0 224 256" aria-hidden="true"><path fill="#fff" d="M207.953 52.162L127.317 4.287a30.37 30.37 0 0 0-31.114 0L15.55 52.162A32.17 32.17 0 0 0 0 79.869v95.734a32.17 32.17 0 0 0 15.55 27.691l80.636 47.859a30.39 30.39 0 0 0 31.115 0l80.636-47.859a32.17 32.17 0 0 0 15.566-27.707V79.869a32.17 32.17 0 0 0-15.55-27.707"></path><path fill="#2f3a3e" d="m208.412 52.277l-80.814-47.98a30.44 30.44 0 0 0-31.184 0l-80.83 47.98A32.24 32.24 0 0 0 0 80.045v95.945a32.24 32.24 0 0 0 15.584 27.752l80.814 47.964a30.46 30.46 0 0 0 31.183 0l80.814-47.964a32.24 32.24 0 0 0 15.6-27.769V80.045a32.24 32.24 0 0 0-15.583-27.768M99.23 246.803l-80.814-47.964A26.6 26.6 0 0 1 5.6 175.989V80.046a26.59 26.59 0 0 1 12.816-22.849L99.23 9.216a24.92 24.92 0 0 1 25.536 0l80.749 47.98a26.43 26.43 0 0 1 12.412 18.48c-2.687-5.712-8.723-7.282-15.762-3.236l-76.396 47.316c-9.531 5.551-16.554 11.814-16.57 23.303v94.213c0 6.877 2.767 11.327 7.039 12.638a25 25 0 0 1-4.24.405a25.03 25.03 0 0 1-12.768-3.512"></path><path fill="#3ab14a" d="m187.007 185.06l-20.086 12.013a1.47 1.47 0 0 0-.92 1.308v5.28c0 .646.435.904.968.597l20.394-12.4a1.62 1.62 0 0 0 .613-1.615v-4.634c-.016-.598-.484-.856-.969-.55"></path><path fill="#fff" d="M144.263 140.832c.646-.323 1.179 0 1.195.92l.064 7.008a12.9 12.9 0 0 1 7.718-.937c.501.13.71.808.517 1.615l-1.534 6.152a2.65 2.65 0 0 1-.694 1.227a1.6 1.6 0 0 1-.404.29a.92.92 0 0 1-.597.098a10.24 10.24 0 0 0-7.444 1.194a9.35 9.35 0 0 0-5.506 8.284c0 3.229 1.615 4.117 7.25 4.214c7.444.13 10.673 3.375 10.754 10.883a26.69 26.69 0 0 1-9.882 20.135l.13 6.878a2.52 2.52 0 0 1-1.18 2.1l-4.068 2.34c-.646.323-1.18 0-1.195-.904v-6.765c-3.488 1.453-7.024 1.792-9.285.888c-.42-.162-.613-.791-.436-1.518l1.47-6.216a2.6 2.6 0 0 1 .726-1.292q.174-.166.388-.275a.8.8 0 0 1 .662 0c2.878.78 5.948.392 8.541-1.081a11.17 11.17 0 0 0 6.314-9.688c0-3.488-1.922-4.941-6.459-4.974c-5.861 0-11.303-1.13-11.416-9.688a25.03 25.03 0 0 1 9.462-19.15l-.29-7.04a2.5 2.5 0 0 1 1.178-2.13z"></path></svg><span>Bash</span></span><div class="code-meta"><span class="code-info">UTF-8</span><span class="code-separator">|</span><span class="code-info">2 Lines</span><span class="code-separator">|</span><button class="code-copy" type="button" disabled aria-label="Copy code" title="Copy code" data-state="idle"><svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><svg class="icon-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></button></div></div><pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-lang="bash" data-lines="2"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> dev</span></span></code></pre></div>
+<p>By default the dev server runs at <code>http://localhost:4321/</code>. Once it is up, open:</p>
+<div class="code-block" data-lang="text" data-lines="1"><div class="code-toolbar"><span class="code-lang"><span>Text</span></span><div class="code-meta"><span class="code-info">UTF-8</span><span class="code-separator">|</span><span class="code-info">1 Line</span><span class="code-separator">|</span><button class="code-copy" type="button" disabled aria-label="Copy code" title="Copy code" data-state="idle"><svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><svg class="icon-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></button></div></div><pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-lang="text" data-lines="1"><code><span class="line"><span>http://localhost:4321/admin/theme/</span></span></code></pre></div>
+<p>If you changed the dev port, replace <code>4321</code> with your actual port.</p>
+<p><code>/admin/</code> is the back-office Site Overview entry, used to view a snapshot of the site. The Theme Console lives at <code>/admin/theme/</code> — note the difference between these two entry points.</p>
+<h2 id="development-vs-production">Development vs. production</h2>
+<p>The Theme Console is a configuration tool for local maintainers. Its behavior differs by environment:</p>
+<ul>
+<li>Development: <code>/admin/theme/</code> can read and save theme configuration</li>
+<li>Production: <code>/admin/theme/</code> only shows a local-dev notice; no writable form is displayed</li>
+<li><code>/api/admin/settings/</code>: available in development only; not a public API</li>
+</ul>
+<h2 id="scope">Scope</h2>
+<p>The Theme Console currently handles these kinds of configuration:</p>
+<ul>
+<li>Site title, default locale, and default SEO description</li>
+<li>Footer year and copyright copy</li>
+<li>The <code>/admin/</code> Overview public toggle and its closed-state message</li>
+<li>Social links and their ordering</li>
+<li>Sidebar site name, quote copy, nav ordering, and visibility</li>
+<li>Sidebar action icons (reading mode / RSS / theme toggle / site overview entry)</li>
+<li>Home page hero, intro copy, and in-page entry links</li>
+<li>Main and sub titles for <code>/essay/</code>, <code>/archive/</code>, <code>/bits/</code>, <code>/memo/</code>, <code>/about/</code></li>
+<li>Article meta display options</li>
+<li>Code block line numbers</li>
+</ul>
+<h2 id="configuration-files">Configuration files</h2>
+<p>When you save, settings are written back into <code>src/data/settings/</code> by group:</p>
+<div class="code-block" data-lang="text" data-lines="6"><div class="code-toolbar"><span class="code-lang"><span>Text</span></span><div class="code-meta"><span class="code-info">UTF-8</span><span class="code-separator">|</span><span class="code-info">6 Lines</span><span class="code-separator">|</span><button class="code-copy" type="button" disabled aria-label="Copy code" title="Copy code" data-state="idle"><svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><svg class="icon-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></button></div></div><pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-lang="text" data-lines="6"><code><span class="line"><span>src/data/settings/</span></span>
+<span class="line"><span>  site.json</span></span>
+<span class="line"><span>  shell.json</span></span>
+<span class="line"><span>  home.json</span></span>
+<span class="line"><span>  page.json</span></span>
+<span class="line"><span>  ui.json</span></span></code></pre></div>
+<blockquote>
+<p>If <code>src/data/settings/*.json</code> does not exist yet, the first save in <code>/admin/theme/</code> generates them automatically.</p>
+</blockquote>
+<p>The Theme Console manages theme configuration inside the repository, so changes can still be tracked and reverted through Git.</p>
+<p>The read order for theme configuration is fixed: <code>src/data/settings/*.json</code> first, then legacy configuration, then project defaults. The legacy configuration mainly comes from <code>site.config.mjs</code> and default constants inside components.<br>
+In other words, right after cloning you can start with the defaults; once you save anything in the Theme Console, trackable settings JSON files are generated.</p>
+<h2 id="page-groups">Page groups</h2>
+<p><code>/admin/theme/</code> is currently split into five groups by editing scenario.</p>
+<h3 id="site">Site</h3>
+<p><code>Site</code> handles site-level basics:</p>
+<ul>
+<li>Site title</li>
+<li>Default locale</li>
+<li>Default SEO description</li>
+<li>Footer year and copyright copy</li>
+<li>Whether <code>/admin/</code> Overview is publicly shown, and the message shown when it is off</li>
+<li>Social links</li>
+</ul>
+<blockquote>
+<p><img alt="Site group screenshot" loading="lazy" decoding="async" width="776" height="614" src="/_astro/theme-console-site.BLsCbyGk_OG12W.webp" srcset=""></p>
+</blockquote>
+<h3 id="sidebar">Sidebar</h3>
+<p><code>Sidebar</code> handles shell and navigation configuration:</p>
+<ul>
+<li>Sidebar site name</li>
+<li>Sidebar quote copy</li>
+<li>Sidebar divider style</li>
+<li>Sidebar action icon visibility (reading mode / RSS / theme toggle / site overview)</li>
+<li>Nav names, ordering, suffix characters, and visibility</li>
+</ul>
+<blockquote>
+<p><img alt="Sidebar group screenshot" loading="lazy" decoding="async" width="776" height="411" src="/_astro/theme-console-sidebar.BO4qsGye_Z1TQSF6.webp" srcset=""></p>
+</blockquote>
+<h3 id="home">Home</h3>
+<p><code>Home</code> handles home-page display configuration:</p>
+<ul>
+<li>Hero image URL and alt text</li>
+<li>Hero visibility</li>
+<li>Home intro lead copy</li>
+<li>Home intro follow-up copy</li>
+<li>The primary and secondary links in the follow-up intro</li>
+</ul>
+<blockquote>
+<p><img alt="Home group screenshot" loading="lazy" decoding="async" width="776" height="418" src="/_astro/theme-console-home.CPnGcdBF_27PvKy.webp" srcset=""></p>
+</blockquote>
+<p>The home follow-up intro still uses a fixed sentence pattern; the console only exposes the copy and entry-link choices, to keep the home structure stable. Currently selectable entries include <code>archive</code>, <code>essay</code>, <code>bits</code>, <code>memo</code>, <code>about</code>, and <code>tag</code>.</p>
+<h3 id="inner-pages">Inner Pages</h3>
+<p><code>Inner Pages</code> handles unified copy and display policy for inner pages:</p>
+<ul>
+<li><code>/essay/</code> page main and sub titles</li>
+<li><code>/archive/</code> page main and sub titles</li>
+<li><code>/bits/</code> page main and sub titles</li>
+<li><code>/memo/</code> page main and sub titles</li>
+<li><code>/about/</code> page main and sub titles</li>
+<li>Whether article meta shows date, tags, word count, and reading time</li>
+<li><code>/bits/</code> default author name and avatar</li>
+</ul>
+<blockquote>
+<p><img alt="Inner Pages group screenshot" loading="lazy" decoding="async" width="776" height="566" src="/_astro/theme-console-inner-pages.pAyR0xj2_2oMNgb.webp" srcset=""></p>
+</blockquote>
+<h3 id="code">Code</h3>
+<ul>
+<li>Whether to show line numbers in code blocks</li>
+</ul>
+<h2 id="save-mechanism">Save mechanism</h2>
+<ul>
+<li>Saves are written back by group (<code>site / shell / home / page / ui</code>); template source code is not edited directly</li>
+<li>Most fields offer live preview or a clear page mapping</li>
+<li>Field validation runs before saving</li>
+<li>A revision tag is attached on save to avoid silent overwrites from concurrent edits</li>
+<li>The write process includes failure rollback, preventing a half-success state across multiple files</li>
+</ul>
+<hr>
+<p>That covers the common configuration entry points and save mechanism for the Theme Console today. If you run into configuration issues or save problems, feel free to open an Issue.</p>  </div> <nav class="prev-next" aria-label="Previous/Next post"> <div class="prev-next__item"> <a class="prev-next__link prev-next__link--prev" href="/archive/content-console-guide/" rel="prev"> <span class="prev-next__label">Previous</span> <span class="prev-next__title">Content Console Usage Guide</span> </a> </div> <div class="prev-next__item"> <a class="prev-next__link prev-next__link--next" href="/archive/admin-console-guide/" rel="next"> <span class="prev-next__label">Next</span> <span class="prev-next__title">Admin Console Quick Guide</span> </a> </div> </nav><dialog class="lightbox" id="lightbox" aria-label="Image preview" aria-hidden="true" data-lightbox data-enable-zoom="false" data-enable-pan="false" data-enable-swipe-down="false" data-mobile-nav="bottom" data-mobile-count="visible" tabindex="-1" hidden> <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close">×</button> <div class="lightbox-navs"> <button class="lightbox-nav lightbox-prev" type="button" data-lightbox-prev aria-label="Previous">‹</button> <button class="lightbox-nav lightbox-next" type="button" data-lightbox-next aria-label="Next">›</button> </div> <figure class="lightbox-figure"> <img data-lightbox-image alt=""> <figcaption class="lightbox-meta"> <span class="lightbox-caption" data-lightbox-caption hidden></span> <span class="lightbox-meta-row"> <span class="lightbox-count" data-lightbox-count aria-live="polite"></span> <span class="lightbox-dots" data-lightbox-dots aria-hidden="true"></span> </span> </figcaption> </figure> </dialog> <script type="module" src="/_astro/ArticleLayout.astro_astro_type_script_index_0_lang.DKdOgIdv.js"></script>  <footer class="site-footer">© 2025-2026 Whono · Theme Demo · by cxro</footer> </div> </main> </div> <template id="scroll-top-template"> <button type="button" class="icon-button float-action scroll-top" aria-label="Back to top" title="Back to top" aria-hidden="true" tabindex="-1"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lucide lucide-chevron-up icon"> <path d="m18 15-6-6-6 6"></path>  </svg> </button> </template> <script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.DLGcQmWK.js"></script>   </body> </html>

@@ -1,0 +1,25 @@
+{
+  "title": "Astro Themes by Whono",
+  "description": "A showcase site for an Astro theme: lightweight, maintainable, reusable.",
+  "defaultLocale": "en-US",
+  "footer": {
+    "startYear": 2025,
+    "showCurrentYear": true,
+    "copyright": "Whono · Theme Demo · by cxro"
+  },
+  "adminOverview": {
+    "publicVisible": true,
+    "hiddenMessage": "The author has not made this page public yet."
+  },
+  "socialLinks": {
+    "github": "https://github.com/cxro/astro-whono",
+    "x": "https://twitter.com/yourname",
+    "email": "Astro@Whono.me",
+    "presetOrder": {
+      "github": 1,
+      "x": 2,
+      "email": 3
+    },
+    "custom": []
+  }
+}

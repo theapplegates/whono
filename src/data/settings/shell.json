@@ -1,0 +1,41 @@
+{
+  "brandTitle": "Whono",
+  "quote": "A minimal Astro theme\nfor essays, notes, and docs.\nDesigned for reading,\nopen-source.",
+  "nav": [
+    {
+      "id": "essay",
+      "label": "Essays",
+      "ornament": "·",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "bits",
+      "label": "Bits",
+      "ornament": "·",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "memo",
+      "label": "Memo",
+      "ornament": "·",
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "archive",
+      "label": "Archive",
+      "ornament": "·",
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "ornament": "·",
+      "visible": true,
+      "order": 5
+    }
+  ]
+}
