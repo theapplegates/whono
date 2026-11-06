@@ -313,9 +313,9 @@ hr {
 @media (max-width: 900px) {
   body:not(.admin-page) {
     color-scheme: light;
-    --sidebar: 1fr;
+    --sidebar: 260px;
     --tap-min-h: 44px;
-    --pad-x: 20px;
+    --pad-x: 28px;
     --card-pad: 10px 12px;
     --quote-pad: 0.85rem;
     --header-gap: 4px;
@@ -343,6 +343,13 @@ hr {
     --pad-x: 28px;
   }
 
+}
+
+@media (max-width: 720px) {
+  body:not(.admin-page) {
+    --sidebar: 1fr;
+    --pad-x: 20px;
+  }
 }
 
 @media (max-width: 640px) {

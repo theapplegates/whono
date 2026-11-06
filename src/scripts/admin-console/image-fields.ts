@@ -41,21 +41,21 @@ const FIELD_CONFIGS: readonly ThemeImageFieldConfig[] = [
     field: 'home.heroImageSrc',
     inputId: 'home-hero-image-src',
     buttonSelector: '[data-admin-images-open="home.heroImageSrc"]',
-    pickerTitle: '更换 Hero 图片',
+    pickerTitle: 'Change Hero image',
     pickerDescription: '',
-    pickerResetLabel: '恢复默认',
-    pickerResetStatus: '已恢复 Hero 默认图',
+    pickerResetLabel: 'Restore default',
+    pickerResetStatus: 'Hero image restored to default',
     pickerFallbackCurrentValue: 'src/assets/hero.png',
-    pickerFallbackCurrentLabel: '默认图片'
+    pickerFallbackCurrentLabel: 'Default image'
   },
   {
     field: 'page.bits.defaultAuthor.avatar',
     inputId: 'page-bits-author-avatar',
     buttonSelector: '[data-admin-images-open="page.bits.defaultAuthor.avatar"]',
-    pickerTitle: '更换 Bits 作者头像',
-    pickerDescription: '仅列出可直接写入 page.bits.defaultAuthor.avatar 的本地 public/** 资源。',
-    pickerResetLabel: '清空头像',
-    pickerResetStatus: '已清空 Bits 默认头像'
+    pickerTitle: 'Change Bits author avatar',
+    pickerDescription: 'Lists only local public/** assets that can be written directly to page.bits.defaultAuthor.avatar.',
+    pickerResetLabel: 'Clear avatar',
+    pickerResetStatus: 'Bits default avatar cleared'
   }
 ];
 
@@ -240,7 +240,7 @@ export const createAdminThemeImageFields = ({
     );
 
     if (!picker) {
-      setMetaText(binding.metaEl, '当前页面未挂载 image picker');
+      setMetaText(binding.metaEl, 'The image picker is not mounted on this page.');
       return;
     }
 
@@ -267,7 +267,7 @@ export const createAdminThemeImageFields = ({
         binding.previewPlaceholder,
         { kind: 'hidden' }
       );
-      setMetaText(binding.metaEl, error instanceof Error ? error.message : '路径暂时无法读取');
+      setMetaText(binding.metaEl, error instanceof Error ? error.message : 'The path cannot be read right now.');
     }
   };
 
@@ -294,7 +294,7 @@ export const createAdminThemeImageFields = ({
     };
 
     binding.input.addEventListener('input', () => {
-      setMetaText(binding.metaEl, '等待确认路径并读取元数据');
+      setMetaText(binding.metaEl, 'Waiting to confirm the path and read metadata');
       setPreview(
         binding.previewWrap,
         binding.previewImg,
@@ -310,7 +310,7 @@ export const createAdminThemeImageFields = ({
     binding.button?.addEventListener('click', () => {
       if (getFieldState(binding.config.field).enabled === false) return;
       if (!picker) {
-        setStatus('warn', '当前页面未挂载 image picker');
+        setStatus('warn', 'The image picker is not mounted on this page.');
         return;
       }
 
@@ -335,7 +335,7 @@ export const createAdminThemeImageFields = ({
           binding.input.value = item.value;
           binding.input.dispatchEvent(new Event('input', { bubbles: true }));
           binding.input.dispatchEvent(new Event('change', { bubbles: true }));
-          setStatus('ok', `已选择本地图片：${item.value}`);
+          setStatus('ok', `Local image selected: ${item.value}`);
         }
       };
 

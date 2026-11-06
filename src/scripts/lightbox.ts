@@ -556,12 +556,12 @@ export const initCodeCopyButtons = () => {
     if (!copied) return;
 
     button.dataset.state = 'copied';
-    button.setAttribute('aria-label', '已复制');
-    button.setAttribute('title', '已复制');
+    button.setAttribute('aria-label', 'Copied');
+    button.setAttribute('title', 'Copied');
     window.setTimeout(() => {
       button.dataset.state = 'idle';
-      button.setAttribute('aria-label', '复制代码');
-      button.setAttribute('title', '复制代码');
+      button.setAttribute('aria-label', 'Copy code');
+      button.setAttribute('title', 'Copy code');
     }, 1200);
   });
 };
@@ -591,12 +591,12 @@ export const initAboutSiteInfoCopyButtons = () => {
     if (!copied) return;
 
     button.dataset.state = 'copied';
-    button.setAttribute('aria-label', '已复制友链信息');
-    button.setAttribute('title', '已复制友链信息');
+    button.setAttribute('aria-label', 'Site info copied');
+    button.setAttribute('title', 'Site info copied');
     window.setTimeout(() => {
       button.dataset.state = 'idle';
-      button.setAttribute('aria-label', '复制友链信息');
-      button.setAttribute('title', '复制友链信息');
+      button.setAttribute('aria-label', 'Copy site info');
+      button.setAttribute('title', 'Copy site info');
     }, 2000);
   });
 };
@@ -611,12 +611,12 @@ export const initArticleLinkCopyButton = () => {
     if (!copied) return;
 
     button.dataset.state = 'copied';
-    button.setAttribute('aria-label', '已复制文章链接');
-    button.setAttribute('title', '已复制文章链接');
+    button.setAttribute('aria-label', 'Article link copied');
+    button.setAttribute('title', 'Article link copied');
     window.setTimeout(() => {
       button.dataset.state = 'idle';
-      button.setAttribute('aria-label', '复制文章链接');
-      button.setAttribute('title', '复制文章链接');
+      button.setAttribute('aria-label', 'Copy article link');
+      button.setAttribute('title', 'Copy article link');
     }, 2000);
   });
 };
@@ -795,7 +795,7 @@ export const initArticleLightbox = (options: ArticleLightboxOptions = {}) => {
       item.el.tabIndex = 0;
       item.el.setAttribute('role', 'button');
       if (!item.el.getAttribute('alt')?.trim() && !item.el.getAttribute('aria-label')) {
-        item.el.setAttribute('aria-label', '打开图片预览');
+        item.el.setAttribute('aria-label', 'Open image preview');
       }
     }
   });

@@ -110,14 +110,14 @@ export type {
 } from './content-routes';
 
 export const ADMIN_CONTENT_SORT_OPTIONS = [
-  { value: 'recent', label: '最近更新' },
-  { value: 'title', label: '标题 A-Z' }
+  { value: 'recent', label: 'Recently updated' },
+  { value: 'title', label: 'Title A-Z' }
 ] as const satisfies readonly { value: AdminContentSortKey; label: string }[];
 
 export const ADMIN_CONTENT_DRAFT_OPTIONS = [
-  { value: 'all', label: '全部状态' },
-  { value: 'published', label: '已发布' },
-  { value: 'draft', label: '仅草稿' }
+  { value: 'all', label: 'All statuses' },
+  { value: 'published', label: 'Published' },
+  { value: 'draft', label: 'Drafts only' }
 ] as const satisfies readonly { value: AdminContentDraftFilter; label: string }[];
 
 const COLLECTION_ORDER = new Map<AdminContentCollectionKey, number>(
@@ -225,7 +225,7 @@ const loadContentIndexItems = async (
 };
 
 const getAdminContentScopeLabel = (collection: AdminContentScopeKey): string =>
-  collection === 'all' ? '全部内容' : getCollectionLabel(collection);
+  collection === 'all' ? 'All content' : getCollectionLabel(collection);
 
 const getAdminContentVisibleCollections = (collection: AdminContentScopeKey): readonly AdminContentCollectionKey[] =>
   collection === 'all' ? ADMIN_CONTENT_COLLECTIONS : [collection];
@@ -482,21 +482,21 @@ export const getAdminContentConsolePageData = async (
 
 export const getAdminContentPublicFallbackLabel = (item: AdminContentIndexItem): string => {
   if (item.isDraft) {
-    return 'draft 条目默认不暴露公开页';
+    return 'Draft entries do not expose a public page by default.';
   }
 
   if (item.collection === 'memo') {
-    return 'memo 当前使用固定公开路由 /memo/';
+    return 'Memo currently uses the fixed public route /memo/.';
   }
 
   if (item.collection === 'about') {
-    return 'about 当前使用固定公开路由 /about/';
+    return 'About currently uses the fixed public route /about/.';
   }
 
   if (item.collection === 'bits') {
     const anchorId = getBitAnchorId(item.slug ?? item.id);
-    return `公开定位依赖 /bits/ 分页与锚点（${anchorId}）`;
+    return `Public location depends on /bits/ pagination and the anchor (${anchorId}).`;
   }
 
-  return '当前条目未生成公开页链接';
+  return 'No public page link has been generated for this entry.';
 };

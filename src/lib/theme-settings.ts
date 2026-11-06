@@ -420,17 +420,17 @@ export const getThemeSettingsFilePath = (group: ThemeSettingsFileGroup): string 
 export const getThemeSettingsRelativePath = (group: ThemeSettingsFileGroup): string => SETTINGS_RELATIVE_PATHS[group];
 
 const THEME_SETTINGS_INVALID_MESSAGE =
-  '检测到 settings JSON 配置文件损坏，Theme Console 已停止读取并禁止保存，请先修复对应文件后再重试';
+  'The settings JSON files are damaged. Theme Console has stopped reading and saving them. Fix the affected files and try again.';
 
 const LEGACY_INTRO_LEAD =
-  '这是一个开源写作主题与示例内容库:包含 随笔/essay、小记/memo、归档/archive 与 絮语/bits，使用与配置请见 README 。';
-const LEGACY_INTRO_MORE = '更多文章请访问';
-const LEGACY_ESSAY_TITLE = '随笔';
-const LEGACY_ARCHIVE_TITLE = '归档';
-const LEGACY_ESSAY_SUBTITLE = '随笔与杂记';
-const LEGACY_BITS_TITLE = '絮语';
-const LEGACY_BITS_SUBTITLE = '生活不只是长篇';
-const LEGACY_ABOUT_TITLE = '关于';
+  'An open-source writing theme and sample content library, with Essays, Memo, Archive, and Bits. See the README for usage and setup.';
+const LEGACY_INTRO_MORE = 'Find more in';
+const LEGACY_ESSAY_TITLE = 'Essays';
+const LEGACY_ARCHIVE_TITLE = 'Archive';
+const LEGACY_ESSAY_SUBTITLE = 'Essays and notes';
+const LEGACY_BITS_TITLE = 'Bits';
+const LEGACY_BITS_SUBTITLE = 'Life is more than long-form writing.';
+const LEGACY_ABOUT_TITLE = 'About';
 const LEGACY_QUOTE = 'A minimal Astro theme\nfor essays, notes, and docs.\nDesigned for reading,\nopen-source.';
 const LEGACY_FOOTER_START_YEAR = 2025;
 const LEGACY_FOOTER_SHOW_CURRENT_YEAR = true;
@@ -449,11 +449,11 @@ const LEGACY_SOCIAL_LINKS: SiteSocialLinks = {
   resolvedSocialItems: []
 };
 const LEGACY_NAV: SidebarNavItem[] = [
-  { id: 'essay', label: '随笔', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 1 },
-  { id: 'bits', label: '絮语', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 2 },
-  { id: 'memo', label: '小记', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 3 },
-  { id: 'archive', label: '归档', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 4 },
-  { id: 'about', label: '关于', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 5 }
+  { id: 'essay', label: 'Essays', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 1 },
+  { id: 'bits', label: 'Bits', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 2 },
+  { id: 'memo', label: 'Memo', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 3 },
+  { id: 'archive', label: 'Archive', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 4 },
+  { id: 'about', label: 'About', ornament: ADMIN_NAV_ORNAMENT_DEFAULT, visible: true, order: 5 }
 ];
 const LEGACY_NAV_ORDER = new Map<SidebarNavId, number>(LEGACY_NAV.map((item) => [item.id, item.order]));
 
@@ -486,8 +486,8 @@ const cloneThemeSettingsReadDiagnostics = (
 
 const DEFAULT_SITE: SiteSettings = {
   title: 'Whono',
-  description: '一个 Astro 主题的展示站：轻量、可维护、可复用。',
-  defaultLocale: 'zh-CN',
+  description: 'A showcase for an Astro theme: lightweight, maintainable, and reusable.',
+  defaultLocale: 'en',
   footer: {
     startYear: LEGACY_FOOTER_START_YEAR,
     showCurrentYear: LEGACY_FOOTER_SHOW_CURRENT_YEAR,
@@ -536,7 +536,7 @@ const DEFAULT_PAGE: PageSettings = {
   },
   archive: {
     title: LEGACY_ARCHIVE_TITLE,
-    subtitle: '按年份分组的归档目录'
+    subtitle: 'An archive of entries grouped by year'
   },
   bits: {
     title: LEGACY_BITS_TITLE,
@@ -822,12 +822,12 @@ const createThemeSettingsReadDiagnostic = (
   const path = SETTINGS_RELATIVE_PATHS[group];
   const message =
     code === 'invalid-json'
-      ? `${path} 不是合法 JSON`
+      ? `${path} is not valid JSON`
       : code === 'invalid-root'
-        ? `${path} 的根节点必须是 JSON 对象`
+        ? `${path} must have a JSON object at its root`
         : code === 'schema-mismatch'
-          ? `${path} 存在无效或非规范配置值`
-          : `${path} 读取失败`;
+          ? `${path} contains invalid or non-canonical settings`
+          : `${path} could not be read`;
   const location = extractDiagnosticLocation(detail);
 
   return {
@@ -905,12 +905,12 @@ const collectThemeSettingsSchemaDiagnostics = (
     if (!mismatchPaths.length) continue;
 
     const summarizedPaths = mismatchPaths.slice(0, 6);
-    const suffix = mismatchPaths.length > summarizedPaths.length ? ' 等' : '';
+    const suffix = mismatchPaths.length > summarizedPaths.length ? ' etc.' : '';
     diagnostics.push(
       createThemeSettingsReadDiagnostic(
         group,
         'schema-mismatch',
-        `以下字段会在读取时被静默修补：${summarizedPaths.join(', ')}${suffix}`
+        `These fields will be silently repaired when loaded: ${summarizedPaths.join(', ')}${suffix}`
       )
     );
   }

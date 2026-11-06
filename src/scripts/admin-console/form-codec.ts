@@ -279,9 +279,9 @@ export const createFormCodec = ({
     return isAdminHomeIntroLinkKey(rawValue) ? rawValue : fallback;
   };
 
-  const HOME_INTRO_PREVIEW_EMPTY = '无首页补充导语';
+  const HOME_INTRO_PREVIEW_EMPTY = 'No home intro extra text';
   const getHomeIntroLinkLabel = (linkKey: HomeIntroLinkKey): string =>
-    ADMIN_HOME_INTRO_LINK_OPTIONS.find((option) => option.id === linkKey)?.label || '链接';
+    ADMIN_HOME_INTRO_LINK_OPTIONS.find((option) => option.id === linkKey)?.label || 'Link';
 
   const syncAdminOverviewControls = (): void => {
     inputSiteAdminOverviewHiddenMessage.disabled = inputSiteAdminOverviewPublicVisible.checked;
@@ -315,10 +315,10 @@ export const createFormCodec = ({
     const [primary, secondary] = collectHomeIntroLinks();
     const primaryLabel = getHomeIntroLinkLabel(primary || defaultPrimaryHomeIntroLink);
     if (!secondary) {
-      return `${introText} ${primaryLabel}。`;
+      return `${introText} ${primaryLabel}.`;
     }
     const secondaryLabel = getHomeIntroLinkLabel(secondary);
-    return `${introText} ${primaryLabel} 或 ${secondaryLabel}。`;
+    return `${introText} ${primaryLabel} or ${secondaryLabel}.`;
   };
 
   const refreshHomeIntroPreview = (): void => {
@@ -326,10 +326,10 @@ export const createFormCodec = ({
   };
 
   const ARTICLE_META_PREVIEW_DATE = '2026-03-18';
-  const ARTICLE_META_PREVIEW_TAGS = ['#Astro', '#写作'] as const;
-  const ARTICLE_META_PREVIEW_WORD_COUNT = '共 2,416 字';
-  const ARTICLE_META_PREVIEW_READING_TIME = '约 6 分钟';
-  const ARTICLE_META_PREVIEW_EMPTY = '当前不显示文章元信息';
+  const ARTICLE_META_PREVIEW_TAGS = ['#Astro', '#Writing'] as const;
+  const ARTICLE_META_PREVIEW_WORD_COUNT = '2,416 words total';
+  const ARTICLE_META_PREVIEW_READING_TIME = 'About 6 min read';
+  const ARTICLE_META_PREVIEW_EMPTY = 'Article metadata is currently hidden';
 
   const getArticleMetaPreviewText = (): string => {
     const segments: string[] = [];

@@ -334,11 +334,11 @@ describe('admin-console/content', () => {
       hasNext: false
     });
     expect(pageData.collectionOptions).toEqual([
-      { value: 'all', label: '全部内容', count: 5 },
-      { value: 'essay', label: '随笔', count: 2 },
-      { value: 'bits', label: '絮语', count: 1 },
-      { value: 'memo', label: '小记', count: 1 },
-      { value: 'about', label: '关于', count: 1 }
+      { value: 'all', label: 'All content', count: 5 },
+      { value: 'essay', label: 'Essays', count: 2 },
+      { value: 'bits', label: 'Bits', count: 1 },
+      { value: 'memo', label: 'Memo', count: 1 },
+      { value: 'about', label: 'About', count: 1 }
     ]);
     expect('tagOptions' in pageData).toBe(false);
     expect(pageData.sections).toHaveLength(1);
@@ -621,7 +621,7 @@ describe('admin-console/content', () => {
   });
 
   it('returns readable public fallback labels for non-public entries', () => {
-    expect(getAdminContentPublicFallbackLabel(createItem({ isDraft: true, publicHref: null }))).toContain('draft');
+    expect(getAdminContentPublicFallbackLabel(createItem({ isDraft: true, publicHref: null }))).toContain('Draft');
     expect(
       getAdminContentPublicFallbackLabel(createItem({
         collection: 'memo',

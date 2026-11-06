@@ -31,7 +31,7 @@ const socialIconOptions: readonly SocialIconOption[] = [
   { value: 'github', optionLabel: 'GitHub', defaultLabel: 'GitHub' },
   { value: 'x', optionLabel: 'X', defaultLabel: 'X' },
   { value: 'email', optionLabel: 'Email', defaultLabel: 'Email' },
-  { value: 'weibo', optionLabel: '微博', defaultLabel: '微博' },
+  { value: 'weibo', optionLabel: 'Weibo', defaultLabel: 'Weibo' },
   { value: 'facebook', optionLabel: 'Facebook', defaultLabel: 'Facebook' },
   { value: 'instagram', optionLabel: 'Instagram', defaultLabel: 'Instagram' },
   { value: 'telegram', optionLabel: 'Telegram', defaultLabel: 'Telegram' },
@@ -39,7 +39,7 @@ const socialIconOptions: readonly SocialIconOption[] = [
   { value: 'bilibili', optionLabel: 'Bilibili', defaultLabel: 'Bilibili' },
   { value: 'youtube', optionLabel: 'YouTube', defaultLabel: 'YouTube' },
   { value: 'linkedin', optionLabel: 'LinkedIn', defaultLabel: 'LinkedIn' },
-  { value: 'website', optionLabel: '网站', defaultLabel: '网站' }
+  { value: 'website', optionLabel: 'Website', defaultLabel: 'Website' }
 ];
 const customSocialIconOptions = socialIconOptions.filter(
   (option) => option.value !== 'github' && option.value !== 'x' && option.value !== 'email'
@@ -82,21 +82,21 @@ const socialPresetRows: readonly SocialPresetRow[] = [
 <div class="admin-subsection" role="group" aria-labelledby="site-social-title">
   <div class="admin-subsection__head">
     <div class="admin-subsection__label">
-      <h3 id="site-social-title" class="admin-subsection__title">社交链接</h3>
-      <span id="site-social-custom-count" class="admin-subsection__meta">(新增 0 / {socialCustomLimit})</span>
+      <h3 id="site-social-title" class="admin-subsection__title">Social links</h3>
+      <span id="site-social-custom-count" class="admin-subsection__meta">(0 added / {socialCustomLimit})</span>
     </div>
     <button id="site-social-custom-add" class="admin-btn admin-btn--ghost admin-btn--mini" type="button">
       <AdminIcon name="plus" size={13} strokeWidth={2.2} />
-      <span>新增链接</span>
+      <span>Add link</span>
     </button>
   </div>
-  <p class="admin-subsection__desc">显示在关于页的页头与联系列表中，按位置从小到大排列。</p>
+  <p class="admin-subsection__desc">Shown in the About page header and contact list, ordered by position from lowest to highest.</p>
   <div class="admin-table admin-social-table">
     <div id="site-social-custom-head" class="admin-table__head admin-social-header" aria-hidden="true">
-      <span class="admin-social-header__order">位置</span>
-      <span>平台</span>
-      <span class="admin-social-header__href">链接地址</span>
-      <span class="admin-social-header__actions">操作</span>
+      <span class="admin-social-header__order">Order</span>
+      <span>Platform</span>
+      <span class="admin-social-header__href">Link URL</span>
+      <span class="admin-social-header__actions">Actions</span>
     </div>
     <div id="site-social-custom-list" class="admin-social-list">
       {socialPresetRows.map((row) => <AdminSocialPresetRow row={row} />)}

@@ -57,17 +57,17 @@ const readPngDimensions = (buffer: Buffer): { width: number; height: number } | 
 
 const assertFaviconUploadFile = (file: File): void => {
   if (file.size <= 0) {
-    throw new AdminSiteAssetUploadError('图标文件为空，请重新选择');
+    throw new AdminSiteAssetUploadError('The icon file is empty. Choose another file.');
   }
   if (file.size > ADMIN_SITE_FAVICON_UPLOAD_MAX_BYTES) {
-    throw new AdminSiteAssetUploadError('图标超过 256KB，请压缩后再上传', 413);
+    throw new AdminSiteAssetUploadError('The icon is larger than 256KB. Compress it and try again.', 413);
   }
   if (path.extname(file.name).toLowerCase() !== '.png') {
-    throw new AdminSiteAssetUploadError('站点图标当前仅支持上传 PNG 文件（SVG 请手动替换 public/favicon.svg）');
+    throw new AdminSiteAssetUploadError('Site icons currently support PNG uploads only (to use SVG, replace public/favicon.svg manually).');
   }
   const type = file.type.trim().toLowerCase();
   if (type && type !== 'image/png' && type !== 'application/octet-stream') {
-    throw new AdminSiteAssetUploadError('请选择 PNG 图片文件');
+    throw new AdminSiteAssetUploadError('Please choose a PNG image file.');
   }
 };
 
@@ -111,7 +111,7 @@ export const uploadAdminSiteFavicon = async ({
   const buffer = Buffer.from(await file.arrayBuffer());
   const dimensions = readPngDimensions(buffer);
   if (!dimensions) {
-    throw new AdminSiteAssetUploadError('文件不是合法 PNG（签名或 IHDR 校验失败）');
+    throw new AdminSiteAssetUploadError('The file is not a valid PNG (signature or IHDR validation failed).');
   }
 
   const { width, height } = dimensions;
@@ -119,11 +119,11 @@ export const uploadAdminSiteFavicon = async ({
   const edgeDiff = Math.abs(width - height);
   const squareTolerance = Math.max(2, Math.round(Math.max(width, height) * 0.02));
   if (edgeDiff > squareTolerance) {
-    throw new AdminSiteAssetUploadError(`站点图标必须接近正方形（宽高偏差不超过 2%），当前为 ${width}x${height}`);
+    throw new AdminSiteAssetUploadError(`Site icons must be nearly square (width and height may differ by at most 2%); current size is ${width}x${height}.`);
   }
   if (Math.min(width, height) < ADMIN_SITE_FAVICON_MIN_EDGE || Math.max(width, height) > ADMIN_SITE_FAVICON_MAX_EDGE) {
     throw new AdminSiteAssetUploadError(
-      `站点图标边长需在 ${ADMIN_SITE_FAVICON_MIN_EDGE}-${ADMIN_SITE_FAVICON_MAX_EDGE}px 之间，当前为 ${width}x${height}`
+      `Site icon edges must be between ${ADMIN_SITE_FAVICON_MIN_EDGE}-${ADMIN_SITE_FAVICON_MAX_EDGE}px; current size is ${width}x${height}.`
     );
   }
 

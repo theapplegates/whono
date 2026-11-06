@@ -38,8 +38,8 @@ const ADMIN_CONTENT_SOURCE_INDEX_EXT_RE = /\.md$/i;
 const MAX_SEARCH_INDEX_TEXT = 600;
 const ESSAY_EXCERPT_LIMIT = 120;
 const BITS_EXCERPT_LIMIT = 180;
-const UNTITLED_VALUE = '(未设置)';
-const SOURCE_ERROR_DATE_LABEL = '源文件异常';
+const UNTITLED_VALUE = '(Not set)';
+const SOURCE_ERROR_DATE_LABEL = 'Source file error';
 
 export type AdminContentSourceManifest = Record<AdminContentCollectionKey, string[]>;
 export type AdminContentSourceCountMap = Record<AdminContentCollectionKey, number>;
@@ -131,7 +131,7 @@ const parseDateTimeInput = (value: unknown): Date | null => {
 };
 
 const getUnsetSourceDateMeta = (): SourceDateMeta => ({
-  label: '未设置日期',
+  label: 'No date set',
   year: null
 });
 
@@ -203,7 +203,7 @@ const mergeSourceError = (...messages: Array<string | null | undefined>): string
   const normalized = messages
     .map((message) => normalizeOptionalText(message))
     .filter(Boolean);
-  return normalized.length > 0 ? normalized.join('；') : null;
+  return normalized.length > 0 ? normalized.join('; ') : null;
 };
 
 const getSourceRecordErrorMessage = (error: unknown): string => {
@@ -213,8 +213,8 @@ const getSourceRecordErrorMessage = (error: unknown): string => {
     : '';
 
   return ['ENOENT', 'EACCES', 'EPERM'].includes(code)
-    ? `源文件读取失败：${message}`
-    : `frontmatter 解析失败：${message}`;
+    ? `Failed to read source file: ${message}`
+    : `Failed to parse frontmatter: ${message}`;
 };
 
 const getBodyDerived = (record: SourceRecord): AdminContentSourceBodyDerived | null =>
@@ -245,8 +245,8 @@ const createEssaySourceIndexItem: FrontmatterAdapter = (record) => {
   const bodyDerived = getBodyDerived(record);
   const sourceError = mergeSourceError(
     record.sourceError,
-    !hasSourceError && !normalizeOptionalText(frontmatter.title) ? 'essay.title 缺失或不是字符串' : null,
-    !hasSourceError && !dateResult ? 'essay.date 缺失或格式无效' : null
+    !hasSourceError && !normalizeOptionalText(frontmatter.title) ? 'essay.title is missing or is not a string' : null,
+    !hasSourceError && !dateResult ? 'essay.date is missing or has an invalid format' : null
   );
 
   return createBaseItem(record, {
@@ -290,7 +290,7 @@ const createBitsSourceIndexItem: FrontmatterAdapter = (record, context) => {
   const authorAvatar = normalizeOptionalText(author?.avatar);
   const sourceError = mergeSourceError(
     record.sourceError,
-    !hasSourceError && !date ? 'bits.date 缺失或格式无效' : null
+    !hasSourceError && !date ? 'bits.date is missing or has an invalid format' : null
   );
 
   return createBaseItem(record, {
@@ -360,7 +360,7 @@ const createAboutSourceIndexItem: FrontmatterAdapter = (record) => {
   const hasSourceError = record.sourceError !== null;
 
   return createBaseItem(record, {
-    title: '关于',
+    title: 'About',
     slug: 'about',
     publicHref: '/about/',
     isDraft: false,
@@ -370,7 +370,7 @@ const createAboutSourceIndexItem: FrontmatterAdapter = (record) => {
     year: null,
     tags: [],
     searchHaystack: buildSearchHaystack([
-      '关于',
+      'About',
       record.entryId,
       record.publicEntryId,
       'about',

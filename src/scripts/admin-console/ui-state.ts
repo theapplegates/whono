@@ -29,8 +29,8 @@ type AdminConsoleUiStateContext = {
   queryAll: <T extends Element>(parent: ParentNode, selector: string) => T[];
 };
 
-const STATUS_WAITING_SAVE = '等待保存';
-const STATUS_CLEAN = '无需保存';
+const STATUS_WAITING_SAVE = 'Unsaved changes';
+const STATUS_CLEAN = 'All changes saved';
 
 export const createAdminConsoleUiState = ({
   root,
@@ -157,7 +157,7 @@ export const createAdminConsoleUiState = ({
     }
 
     setErrorBanner({
-      title: options.title ?? '请先处理以下问题',
+      title: options.title ?? 'Please fix the following issues',
       ...(options.message ? { message: options.message } : {}),
       items: errors,
       retryable: options.retryable ?? false
@@ -205,12 +205,12 @@ export const createAdminConsoleUiState = ({
     },
     setSaving: (next: boolean): void => {
       isSaving = next;
-      saveBtn.textContent = next ? '保存中...' : '保存';
+      saveBtn.textContent = next ? 'Saving...' : 'Save';
       syncInteractiveAvailability();
     },
     setValidating: (next: boolean): void => {
       isValidating = next;
-      validateBtn.textContent = next ? '校验中...' : '检查配置';
+      validateBtn.textContent = next ? 'Checking...' : 'Check configuration';
       syncInteractiveAvailability();
     }
   };

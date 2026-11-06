@@ -13,8 +13,8 @@ export async function GET(context) {
   });
 
   return rss({
-    title: `${settings.site.title} · 随笔`,
-    description: '随笔与杂记更新',
+    title: `${settings.site.title} · Essays`,
+    description: 'New essays and notes.',
     site: context.site,
     items: visibleEssays.map((entry) => ({
       title: entry.data.title,

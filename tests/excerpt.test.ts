@@ -3,22 +3,22 @@ import { cleanMarkdownToText, deriveMarkdownText } from '../src/utils/excerpt';
 
 describe('cleanMarkdownToText content syntax', () => {
   it('replaces spoiler text so it never reaches excerpts or search indexes', () => {
-    expect(cleanMarkdownToText('开头 :spoiler[秘密 **内容**] 结束')).toBe('开头 [隐藏内容] 结束');
-    expect(cleanMarkdownToText('结局是:spoiler[他活下来了]。')).toBe('结局是[隐藏内容]。');
-    expect(cleanMarkdownToText('前文\n\n:::spoiler\n机密段落\n\n第二段\n:::\n\n后文')).toBe('前文 [隐藏内容] 后文');
+    expect(cleanMarkdownToText('开头 :spoiler[秘密 **内容**] 结束')).toBe('开头 [hidden content] 结束');
+    expect(cleanMarkdownToText('结局是:spoiler[他活下来了]。')).toBe('结局是[hidden content]。');
+    expect(cleanMarkdownToText('前文\n\n:::spoiler\n机密段落\n\n第二段\n:::\n\n后文')).toBe('前文 [hidden content] 后文');
   });
 
   it('hides spoilers inside blockquotes and spoilers that contain links', () => {
-    expect(cleanMarkdownToText('> :::spoiler\n> 凶手是管家\n> :::\n\n后文')).toBe('[隐藏内容] 后文');
-    expect(cleanMarkdownToText('答案:spoiler[见 [这篇文章](https://example.com)]。')).toBe('答案[隐藏内容]。');
+    expect(cleanMarkdownToText('> :::spoiler\n> 凶手是管家\n> :::\n\n后文')).toBe('[hidden content] 后文');
+    expect(cleanMarkdownToText('答案:spoiler[见 [这篇文章](https://example.com)]。')).toBe('答案[hidden content]。');
   });
 
   it('keeps an unclosed or cut spoiler block hidden up to the end', () => {
     const source = '前文\n\n:::spoiler\n机密\n<!-- more -->\n更多机密\n:::\n\n后文';
 
     expect(deriveMarkdownText(source)).toEqual({
-      plainText: '前文 [隐藏内容] 后文',
-      excerptText: '前文 [隐藏内容]'
+      plainText: '前文 [hidden content] 后文',
+      excerptText: '前文 [hidden content]'
     });
   });
 

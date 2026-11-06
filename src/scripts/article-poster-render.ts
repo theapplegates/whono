@@ -60,7 +60,7 @@ export const renderArticlePoster = async (data: ArticlePosterData): Promise<stri
     date: `13px ${copyFont}`,
     hint: `12px ${copyFont}`
   };
-  const hint = '扫码阅读全文';
+  const hint = 'Scan to read the full article';
   // Canvas 不会等待网页字体，先按实际文字加载；加载失败时和页面一样退回系统字体。
   const loadFont = (font: string, text: string) => document.fonts.load(font, text).catch(() => []);
   const [avatar] = await Promise.all([

@@ -283,7 +283,7 @@ describe('admin images api', () => {
           value: 'https://cdn.example.test/uploads/essay/guide/cloud-shot.webp',
           origin: 'cloud',
           browseGroup: 'cloud',
-          browseGroupLabel: '云端图片',
+          browseGroupLabel: 'Cloud images',
           fileName: 'cloud-shot.webp',
           size: 2048,
           mimeType: 'image/webp',
@@ -399,7 +399,7 @@ describe('admin images api', () => {
     const payload = JSON.parse(await response.text());
     expect(payload).toEqual(expect.objectContaining({
       ok: false,
-      errors: ['云端图片操作失败，请查看服务端日志'],
+      errors: ['Cloud image operation failed. Check the server logs.'],
       error: expect.objectContaining({
         code: 'cloud_unknown',
         outcome: 'failed_known',
@@ -421,7 +421,7 @@ describe('admin images api', () => {
     expect(response.status).toBe(500);
     expect(JSON.parse(await response.text())).toEqual(expect.objectContaining({
       ok: false,
-      errors: ['云端图片存储配置无效，请检查服务端配置'],
+      errors: ['Cloud image storage configuration is invalid. Check the server configuration.'],
       error: expect.objectContaining({ code: 'cloud_config_invalid', traceId: expect.any(String) })
     }));
     expect(s3SdkMock.paginateListObjectsV2).not.toHaveBeenCalled();
@@ -439,7 +439,7 @@ describe('admin images api', () => {
     expect(response.status).toBe(500);
     expect(JSON.parse(await response.text())).toEqual(expect.objectContaining({
       ok: false,
-      errors: ['云端图片存储配置无效，请检查服务端配置'],
+      errors: ['Cloud image storage configuration is invalid. Check the server configuration.'],
       error: expect.objectContaining({ code: 'cloud_config_invalid', traceId: expect.any(String) })
     }));
     expect(s3SdkMock.paginateListObjectsV2).not.toHaveBeenCalled();
@@ -467,7 +467,7 @@ describe('admin images api', () => {
     expect(response.status).toBe(500);
     expect(JSON.parse(await response.text())).toEqual(expect.objectContaining({
       ok: false,
-      errors: ['云端图片存储配置无效，请检查服务端配置'],
+      errors: ['Cloud image storage configuration is invalid. Check the server configuration.'],
       error: expect.objectContaining({ code: 'cloud_config_invalid', traceId: expect.any(String) })
     }));
     expect(s3SdkMock.paginateListObjectsV2).not.toHaveBeenCalled();
@@ -491,7 +491,7 @@ describe('admin images api', () => {
       expect.arrayContaining([
         expect.objectContaining({
           value: 'src/content/essay/guide',
-          label: '随笔 · 附件映射测试',
+          label: 'Essays · 附件映射测试',
           count: 1
         })
       ])
@@ -510,7 +510,7 @@ describe('admin images api', () => {
           value: 'src/content/essay/guide-assets/hero.png',
           origin: 'src/content',
           owner: 'src/content/essay/guide',
-          ownerLabel: '随笔 · 附件映射测试'
+          ownerLabel: 'Essays · 附件映射测试'
         })
       ])
     );
@@ -748,7 +748,7 @@ describe('admin images api', () => {
     expect(response.status).toBe(502);
     expect(JSON.parse(await response.text())).toEqual(expect.objectContaining({
       ok: false,
-      errors: ['云端图片操作失败，请查看服务端日志'],
+      errors: ['Cloud image operation failed. Check the server logs.'],
       error: expect.objectContaining({ code: 'cloud_unknown', outcome: 'failed_known', traceId: expect.any(String) })
     }));
   });
@@ -919,7 +919,7 @@ describe('admin images api', () => {
     expect(payload.ok).toBe(false);
     expect(payload.errors).toEqual(
       expect.arrayContaining([
-        expect.stringContaining('memo 仅支持固定源文件')
+        expect.stringContaining('memo only supports a fixed source file')
       ])
     );
   });
@@ -941,7 +941,7 @@ describe('admin images api', () => {
     expect(payload.ok).toBe(false);
     expect(payload.errors).toEqual(
       expect.arrayContaining([
-        expect.stringContaining('当前仅支持随笔正文图片、小记正文图片或絮语配图上传')
+        expect.stringContaining('Only essay body images, bits body images, or memo images can be uploaded right now')
       ])
     );
     await expect(readFile(path.join(tempRoot, 'src', 'content', 'about', 'about-shot.png'))).rejects.toThrow();
@@ -962,7 +962,7 @@ describe('admin images api', () => {
     expect(response.status).toBe(400);
     const payload = JSON.parse(await response.text());
     expect(payload.ok).toBe(false);
-    expect(payload.errors).toEqual(expect.arrayContaining(['请选择图片文件']));
+    expect(payload.errors).toEqual(expect.arrayContaining(['Please choose an image file.']));
   });
 
   it('derives recent scope from local file mtime and excludes hidden system assets', async () => {

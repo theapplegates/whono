@@ -18,7 +18,7 @@ import {
 } from '../content';
 import { collectTagSummary, getTagPath } from '../tags';
 import { formatDateTime, formatISODate, formatISODateUtc } from '../../utils/format';
-import { cleanMarkdownToText } from '../../utils/excerpt';
+import { cleanMarkdownToText, countTextWords } from '../../utils/excerpt';
 import packageJson from '../../../package.json';
 
 export type AdminOverviewCollectionKey = 'essay' | 'bits' | 'memo';
@@ -158,9 +158,9 @@ const COLLECTION_LABELS: Record<AdminOverviewCollectionKey, string> = {
 };
 
 const COLLECTION_DETAILS: Record<AdminOverviewCollectionKey, string> = {
-  essay: '文章',
-  bits: '动态',
-  memo: '小记'
+  essay: 'Articles',
+  bits: 'Updates',
+  memo: 'Notes'
 };
 
 const RECENT_LIMIT = 6;
@@ -169,8 +169,6 @@ const ACTIVITY_DAY_COUNT = 90;
 const SYSTEM_STATUS_ACTIVITY_DAY_COUNT = 14;
 const WORD_COUNT_COMPACT_THRESHOLD = 100_000;
 const WORD_COUNT_COMPACT_UNIT = 10_000;
-const WORD_TOKEN_REGEX =
-  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]|[A-Za-z0-9]+/gu;
 const ASTRO_VERSION = String(packageJson.dependencies?.astro ?? 'unknown').replace(/^[~^]/, '');
 
 const DEPLOY_TARGET_LABELS = {
@@ -274,7 +272,7 @@ const getRecentMemoPublication = (entry: MemoEntry): AdminOverviewRecentPublicat
   const isDraft = entry.data.draft === true;
   const title = entry.data.title?.trim()
     || getMemoDerivedText(entry).excerptText
-    || '小记';
+    || 'Memo';
   return {
     collection: 'memo',
     collectionLabel: COLLECTION_LABELS.memo,
@@ -282,7 +280,7 @@ const getRecentMemoPublication = (entry: MemoEntry): AdminOverviewRecentPublicat
     href: isDraft ? null : '/memo/',
     isDraft,
     date: entry.data.date ?? null,
-    dateLabel: entry.data.date ? formatCompactDate(entry.data.date) : '未设置日期',
+    dateLabel: entry.data.date ? formatCompactDate(entry.data.date) : 'No date set',
     shortDateLabel: formatShortDate(entry.data.date ?? null)
   };
 };
@@ -339,39 +337,34 @@ const buildCollectionShares = (source: AdminOverviewPublicSource): AdminOverview
   });
 };
 
-const countAdminOverviewTextWords = (text: string): number =>
-  text.match(WORD_TOKEN_REGEX)?.length ?? 0;
-
-export const countAdminOverviewWords = (markdown: string): number => {
-  const text = cleanMarkdownToText(markdown);
-  return countAdminOverviewTextWords(text);
-};
+export const countAdminOverviewWords = (markdown: string): number =>
+  countTextWords(cleanMarkdownToText(markdown));
 
 export const formatAdminOverviewWordMetric = (wordCount: number): { value: string; suffix: string } => {
   if (wordCount <= WORD_COUNT_COMPACT_THRESHOLD) {
     return {
       value: String(wordCount),
-      suffix: '字'
+      suffix: 'words'
     };
   }
 
   return {
     value: (wordCount / WORD_COUNT_COMPACT_UNIT).toFixed(1),
-    suffix: '万字'
+    suffix: '×10k words'
   };
 };
 
 const buildAdminOverviewWordCount = (source: AdminOverviewPublicSource): number =>
   source.essays.reduce(
-    (total, entry) => total + countAdminOverviewTextWords(getEssayDerivedText(entry).plainText),
+    (total, entry) => total + countTextWords(getEssayDerivedText(entry).plainText),
     0
   )
   + source.bits.reduce(
-    (total, entry) => total + countAdminOverviewTextWords(getBitsDerivedText(entry).plainText),
+    (total, entry) => total + countTextWords(getBitsDerivedText(entry).plainText),
     0
   )
   + source.memos.reduce(
-    (total, entry) => total + countAdminOverviewTextWords(getMemoDerivedText(entry).plainText),
+    (total, entry) => total + countTextWords(getMemoDerivedText(entry).plainText),
     0
   );
 

@@ -40,12 +40,12 @@ const {
 // 分组标签：一次只显示一个分组，其余分组用 hidden 隐藏（不卸载，脚本仍能取到全部控件），统一保存。
 // id 同时用作地址栏 hash（#sidebar 等），刷新后停留在当前分组。
 const sectionTabs = [
-  { id: 'site', label: '站点', icon: 'admin-site' },
-  { id: 'sidebar', label: '侧栏', icon: 'admin-sidebar' },
-  { id: 'home', label: '首页', icon: 'admin-homepage' },
-  { id: 'page', label: '页面', icon: 'admin-page' },
-  { id: 'article', label: '文章', icon: 'admin-article' },
-  { id: 'typography', label: '字体', icon: 'admin-typography' }
+  { id: 'site', label: 'Site', icon: 'admin-site' },
+  { id: 'sidebar', label: 'Sidebar', icon: 'admin-sidebar' },
+  { id: 'home', label: 'Home', icon: 'admin-homepage' },
+  { id: 'page', label: 'Pages', icon: 'admin-page' },
+  { id: 'article', label: 'Article', icon: 'admin-article' },
+  { id: 'typography', label: 'Typography', icon: 'admin-typography' }
 ] as const;
 type SectionTabId = (typeof sectionTabs)[number]['id'];
 const defaultTabId: SectionTabId = sectionTabs[0].id;
@@ -59,7 +59,7 @@ const panelAttrs = (id: SectionTabId) => ({
 
 <section class="admin-theme-console" data-admin-root data-settings-endpoint={settingsEndpoint}>
   <div class="admin-tabs-bar">
-    <div class="admin-tabs" role="tablist" aria-label="主题设置分组">
+    <div class="admin-tabs" role="tablist" aria-label="Theme settings sections">
       {
         sectionTabs.map((tab) => (
           <button
@@ -75,7 +75,7 @@ const panelAttrs = (id: SectionTabId) => ({
             <AdminIcon name={tab.icon} class="admin-tabs__icon" size={16} />
             {tab.label}
             <span class="admin-tabs__dot" data-admin-tab-invalid hidden>
-              <span class="admin-sr-only">（有待处理的问题）</span>
+              <span class="admin-sr-only">(Has issues to resolve)</span>
             </span>
           </button>
         ))
@@ -88,11 +88,11 @@ const panelAttrs = (id: SectionTabId) => ({
     titleId="admin-error-title"
     messageId="admin-error-message"
     listId="admin-error-list"
-    title="操作未完成"
-    label="配置异常"
+    title="Operation not completed"
+    label="Configuration error"
     retryAction={{
       id: 'admin-error-retry',
-      label: '重新检测'
+      label: 'Check again'
     }}
     tabindex={-1}
   />
@@ -136,17 +136,17 @@ const panelAttrs = (id: SectionTabId) => ({
   <div id="admin-actions" class="admin-actions" data-dirty="false" data-sticky="false">
     <div class="admin-actions__meta">
       <p id="admin-dirty-banner" class="admin-banner admin-banner--dirty" hidden>
-        * 你有未保存更改。
+        * You have unsaved changes.
       </p>
     </div>
     <div class="admin-actions__controls">
       <p id="admin-status-inline" class="admin-status admin-status--inline" data-state="idle" aria-hidden="true">
-        等待加载
+        Loading…
       </p>
       <div class="admin-actions__buttons">
-        <button id="admin-validate" class="admin-btn admin-btn--secondary admin-btn--compact" type="button">检查配置</button>
-        <button id="admin-reset" class="admin-btn admin-btn--ghost admin-btn--compact" type="button">重置更改</button>
-        <button id="admin-save" class="admin-btn admin-btn--primary admin-btn--compact" type="button">保存</button>
+        <button id="admin-validate" class="admin-btn admin-btn--secondary admin-btn--compact" type="button">Validate settings</button>
+        <button id="admin-reset" class="admin-btn admin-btn--ghost admin-btn--compact" type="button">Reset changes</button>
+        <button id="admin-save" class="admin-btn admin-btn--primary admin-btn--compact" type="button">Save</button>
       </div>
     </div>
   </div>

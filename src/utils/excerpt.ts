@@ -1,13 +1,19 @@
 const MORE_REGEX = /<!--\s*more\s*-->/i;
 
 // 模糊内容不进入摘要、meta description 与搜索索引。块未闭合（如被 <!-- more --> 截断）时一直遮到结尾。
-const HIDDEN_TEXT_PLACEHOLDER = '[隐藏内容]';
+const HIDDEN_TEXT_PLACEHOLDER = '[hidden content]';
 const SPOILER_BLOCK_RE = /^[ \t]*(:{3,})spoiler\b[^\n]*\n[\s\S]*?(?:^[ \t]*\1[ \t]*$|(?![\s\S]))/gm;
 const SPOILER_INLINE_RE = /:spoiler\[(?:[^[\]\\]|\\.|\[[^[\]]*\])+\](?:\{[^}\n]*\})?/g;
 // `:::note[标题]`、`:::details[问题]{open}` 等指令围栏行只保留标题。
 const DIRECTIVE_FENCE_RE = /^[ \t]*:{3,}[ \t]*[\w-]*(?:\[([^\]\n]*)\])?(?:\{[^}\n]*\})?[ \t]*$/gm;
 // 与 src/plugins/remark-mark.mjs 的配对规则一致：两侧紧贴英文字母或数字时不算高亮。
 const HIGHLIGHT_RE = /(?<![A-Za-z0-9=])==(?=[^\s=])([\s\S]*?[^\s=])==(?![A-Za-z0-9=])/g;
+// CJK 字符按单字计数，拉丁字母/数字按连续词计数。
+const CJK_TOKEN_REGEX = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu;
+const WORD_TOKEN_REGEX =
+  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]|[A-Za-z0-9]+/gu;
+const LATIN_WORDS_PER_MINUTE = 220;
+const CJK_CHARS_PER_MINUTE = 320;
 
 export type DerivedMarkdownText = {
   plainText: string;
@@ -55,6 +61,17 @@ export function truncateText(text: string, maxChars = 120): string {
   if (!text) return '';
   if (text.length <= maxChars) return text;
   return `${text.slice(0, Math.max(0, maxChars))}…`;
+}
+
+export function countTextWords(text: string): number {
+  return text.match(WORD_TOKEN_REGEX)?.length ?? 0;
+}
+
+export function estimateReadingMinutes(text: string): number {
+  const cjkCount = text.match(CJK_TOKEN_REGEX)?.length ?? 0;
+  const latinWordCount = Math.max(0, countTextWords(text) - cjkCount);
+  const minutes = latinWordCount / LATIN_WORDS_PER_MINUTE + cjkCount / CJK_CHARS_PER_MINUTE;
+  return Math.max(1, Math.ceil(minutes));
 }
 
 export function deriveMarkdownText(md: string): DerivedMarkdownText {

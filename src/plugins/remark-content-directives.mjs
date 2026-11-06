@@ -4,10 +4,10 @@ import { visit } from 'unist-util-visit';
 const SPOILER_PROPERTIES = Object.freeze({
   role: 'button',
   tabIndex: 0,
-  ariaLabel: '隐藏内容，点击显示',
-  title: '点击显示'
+  ariaLabel: 'Hidden content, click to reveal',
+  title: 'Click to reveal'
 });
-const DETAILS_DEFAULT_SUMMARY = '详情';
+const DETAILS_DEFAULT_SUMMARY = 'Details';
 
 // remark-directive 会把 `10:30`、`a:b`、`localhost:4321` 解析成 textDirective，文字被吞掉、段落被拆开。
 // 除 `:spoiler[...]` 外，行内指令一律按源文本原样还原。

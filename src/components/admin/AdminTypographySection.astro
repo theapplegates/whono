@@ -6,15 +6,15 @@ import {
 } from '../../lib/admin-console/theme-shared';
 
 const typographyFields = [
-  { role: 'readable', label: '正文字体', tip: '用于文章正文与标题。' },
-  { role: 'copy', label: '文案字体', tip: '用于导语、关于页等楷体场景。' },
-  { role: 'mono', label: '等宽字体', tip: '用于代码块与行内代码。' },
-  { role: 'brand', label: '品牌字体', tip: '用于侧栏站点名与引言。' }
+  { role: 'readable', label: 'Body font', tip: 'Used for article body text and headings.' },
+  { role: 'copy', label: 'Copy font', tip: 'Used for intros, the About page, and other calligraphic text.' },
+  { role: 'mono', label: 'Monospace font', tip: 'Used for code blocks and inline code.' },
+  { role: 'brand', label: 'Brand font', tip: 'Used for the sidebar site name and quote.' }
 ] as const;
 ---
 
 <fieldset class="admin-section">
-  <legend class="admin-sr-only"><h2>字体设置</h2></legend>
+  <legend class="admin-sr-only"><h2>Typography settings</h2></legend>
   <div class="admin-subsection admin-subsection--loose">
     {
       typographyFields.map((field) => {
@@ -47,7 +47,7 @@ const typographyFields = [
                   />
                   <span class="admin-font-card__body">
                     <span class="admin-font-card__preview" aria-hidden="true" style={`font-family: ${option.previewStack};`}>
-                      永 Aa
+                      Aa
                     </span>
                     <span class="admin-font-card__name">{option.cardLabel}</span>
                     <span class="admin-font-card__badge">{option.badge}</span>

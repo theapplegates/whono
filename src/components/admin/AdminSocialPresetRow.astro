@@ -17,9 +17,9 @@ interface Props {
 }
 
 const { row } = Astro.props;
-const visibilityLabel = `隐藏 ${row.label}`;
-const removeLabel = `${row.label} 为固定项，不可删除`;
-const hrefLabel = row.id === 'email' ? '邮箱地址' : '链接地址';
+const visibilityLabel = `Hide ${row.label}`;
+const removeLabel = `${row.label} is a fixed item and cannot be deleted`;
+const hrefLabel = row.id === 'email' ? 'Email address' : 'Link URL';
 ---
 
 <article class="admin-row admin-row--interactive admin-row--table admin-table__row admin-social-row admin-social-row--preset" data-social-preset-row data-social-preset-id={row.id}>
@@ -33,7 +33,7 @@ const hrefLabel = row.id === 'email' ? '邮箱地址' : '链接地址';
       max={String(ADMIN_SOCIAL_ORDER_MAX)}
       step="1"
       inputmode="numeric"
-      aria-label={`${row.label} 位置排序`}
+      aria-label={`${row.label} order`}
     />
   </div>
 

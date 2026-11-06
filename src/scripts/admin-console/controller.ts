@@ -35,7 +35,7 @@ type AdminThemeControllerContext = {
   revealField: (field: HTMLElement) => void;
 };
 
-const STATUS_INVALID_SETTINGS = '配置损坏';
+const STATUS_INVALID_SETTINGS = 'Settings corrupted';
 
 const deepClone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 
@@ -138,7 +138,7 @@ export const createAdminThemeController = ({
     stageExternalUpdate(latestPayload);
     uiState.setErrorBanner({
       title,
-      items: ['你的修改仍保留在页面中；如需同步最新配置，请点击「重置更改」。']
+      items: ['Your changes are still preserved on this page. To sync the latest configuration, click "Reset changes".']
     });
     uiState.setDirty(true);
     uiState.setStatus('warn', status, { announce: false });
@@ -148,8 +148,8 @@ export const createAdminThemeController = ({
 
   const setInvalidSettingsErrorBanner = (invalidState: ThemeSettingsEditableErrorState): void => {
     uiState.setErrorBanner({
-      title: '已切换为只读保护',
-      message: '检测到 settings 配置文件损坏。请先修复文件，再点击“重新检测”或刷新当前页面。',
+      title: 'Read-only protection enabled',
+      message: 'The settings configuration file is corrupted. Fix the file first, then click "Check again" or refresh the page.',
       items: createInvalidSettingsBannerItems(invalidState),
       retryable: true
     });
@@ -198,8 +198,8 @@ export const createAdminThemeController = ({
     const resolvedPayload = extractSettingsPayload(payload);
     if (!resolvedPayload) {
       clearInvalidFields();
-      uiState.setStatus('error', '返回数据格式无效');
-      uiState.setErrors([getPayloadMessage(payload) || '配置接口返回了无效的 payload'], { title: '读取配置失败' });
+      uiState.setStatus('error', 'Invalid response data format');
+      uiState.setErrors([getPayloadMessage(payload) || 'The configuration API returned an invalid payload.'], { title: 'Failed to load configuration' });
       revealErrorState();
       return;
     }
@@ -216,7 +216,7 @@ export const createAdminThemeController = ({
     uiState.setDirty(false);
     uiState.setStatus(
       'ready',
-      source === 'remote' ? '已同步最新配置' : '已载入初始配置',
+      source === 'remote' ? 'Latest configuration synced' : 'Initial configuration loaded',
       { announce: options.announceStatus ?? source === 'remote' }
     );
   };
@@ -228,10 +228,10 @@ export const createAdminThemeController = ({
     clearInvalidFields();
     uiState.setDirty(false);
     uiState.setConsoleLocked(true);
-    uiState.setStatus('error', '初始化失败');
+    uiState.setStatus('error', 'Initialization failed');
     uiState.setErrors([message], {
-      title: '读取配置失败',
-      message: '未能读取 Theme Console 当前配置。请点击“重新检测”重试。',
+      title: 'Failed to load configuration',
+      message: 'Could not load the current Theme Console configuration. Click "Check again" to retry.',
       retryable: true
     });
     revealErrorState();
@@ -258,7 +258,7 @@ export const createAdminThemeController = ({
   };
 
   const loadFromApi = async (): Promise<void> => {
-    uiState.setStatus('loading', '加载中', { announce: false });
+    uiState.setStatus('loading', 'Loading', { announce: false });
     try {
       const response = await fetch(endpoint, {
         method: 'GET',
@@ -273,14 +273,14 @@ export const createAdminThemeController = ({
         throw new Error(getPayloadMessage(payload) || `HTTP ${response.status}`);
       }
       if (!extractSettingsPayload(payload)) {
-        throw new Error(getPayloadMessage(payload) || '返回数据格式无效');
+        throw new Error(getPayloadMessage(payload) || 'Invalid response data format');
       }
       loadPayload(payload, 'remote');
     } catch (error) {
       if (hasInitialSettings()) {
-        uiState.setStatus('warn', '接口读取失败');
+        uiState.setStatus('warn', 'Failed to read from API');
       } else if (!uiState.isConsoleLocked()) {
-        setInitialLoadError(error instanceof Error ? error.message : '初始化请求失败，请稍后重试');
+        setInitialLoadError(error instanceof Error ? error.message : 'Initialization request failed. Try again later.');
       }
       console.warn(error);
     }
@@ -291,22 +291,22 @@ export const createAdminThemeController = ({
 
     const { draft, issues } = validateCurrentSettings();
     if (issues.length) {
-      uiState.setStatus('error', '校验未通过', { announce: false });
+      uiState.setStatus('error', 'Validation failed', { announce: false });
       revealErrorState(issues);
       return;
     }
 
     const current = canonicalize(draft);
     uiState.setValidating(true);
-    uiState.setStatus('loading', '正在预检');
+    uiState.setStatus('loading', 'Running pre-check');
 
     try {
       if (!currentRevision) {
         clearInvalidFields();
-        uiState.setErrors(['当前配置缺少 revision，请先同步最新配置后再检查'], {
-          title: '检查前需要重新同步配置'
+        uiState.setErrors(['The current configuration is missing a revision. Sync the latest configuration before checking.'], {
+          title: 'Sync the configuration again before checking'
         });
-        uiState.setStatus('error', '检查配置失败', { announce: false });
+        uiState.setStatus('error', 'Configuration check failed', { announce: false });
         revealErrorState();
         return;
       }
@@ -328,15 +328,15 @@ export const createAdminThemeController = ({
 
         if (
           response.status === 409
-          && showExternalUpdateConflict(payload, '检查时发现外部更新', '检查时发现外部更新，当前草稿已保留')
+          && showExternalUpdateConflict(payload, 'External update detected during check', 'An external update was detected during the check. Your current draft has been preserved.')
         ) {
           return;
         }
 
-        uiState.setErrors(serverErrors.length ? serverErrors : ['检查配置失败，请稍后重试'], {
-          title: '检查配置失败'
+        uiState.setErrors(serverErrors.length ? serverErrors : ['Configuration check failed. Try again later.'], {
+          title: 'Configuration check failed'
         });
-        uiState.setStatus('error', '检查配置失败', { announce: false });
+        uiState.setStatus('error', 'Configuration check failed', { announce: false });
         revealErrorState(markServerIssues(payload));
         return;
       }
@@ -344,12 +344,12 @@ export const createAdminThemeController = ({
       clearInvalidFields();
       clearExternalUpdate();
       uiState.clearErrorBanner();
-      uiState.setStatus('ok', '检查通过');
+      uiState.setStatus('ok', 'Check passed');
     } catch (error) {
       console.error(error);
       clearInvalidFields();
-      uiState.setErrors(['检查配置请求失败，请检查本地服务日志'], { title: '检查配置失败' });
-      uiState.setStatus('error', '检查配置失败', { announce: false });
+      uiState.setErrors(['Configuration check request failed. Check the local server logs.'], { title: 'Configuration check failed' });
+      uiState.setStatus('error', 'Configuration check failed', { announce: false });
       revealErrorState();
     } finally {
       uiState.setValidating(false);
@@ -369,7 +369,7 @@ export const createAdminThemeController = ({
       clearInvalidFields();
       uiState.clearErrorBanner();
       uiState.setDirty(false);
-      uiState.setStatus('ready', '已同步外部最新配置');
+      uiState.setStatus('ready', 'Synced the latest external configuration');
       return;
     }
 
@@ -379,14 +379,14 @@ export const createAdminThemeController = ({
     clearInvalidFields();
     uiState.clearErrorBanner();
     uiState.setDirty(false);
-    uiState.setStatus('ready', '已重置');
+    uiState.setStatus('ready', 'Reset complete');
   };
 
   const saveSettings = async (): Promise<void> => {
     if (uiState.isSaving() || uiState.isValidating()) return;
     const { draft, issues } = validateCurrentSettings();
     if (issues.length) {
-      uiState.setStatus('error', '保存前校验失败', { announce: false });
+      uiState.setStatus('error', 'Validation failed before saving', { announce: false });
       revealErrorState(issues);
       return;
     }
@@ -394,13 +394,13 @@ export const createAdminThemeController = ({
     const current = canonicalize(draft);
 
     uiState.setSaving(true);
-    uiState.setStatus('loading', '正在保存');
+    uiState.setStatus('loading', 'Saving');
 
     try {
       if (!currentRevision) {
         clearInvalidFields();
-        uiState.setErrors(['当前配置缺少 revision，请先同步最新配置后再保存'], { title: '保存前需要重新同步配置' });
-        uiState.setStatus('error', '保存失败', { announce: false });
+        uiState.setErrors(['The current configuration is missing a revision. Sync the latest configuration before saving.'], { title: 'Sync the configuration again before saving' });
+        uiState.setStatus('error', 'Save failed', { announce: false });
         revealErrorState();
         return;
       }
@@ -420,16 +420,16 @@ export const createAdminThemeController = ({
         const serverErrors = getPayloadErrors(payload);
         if (
           response.status === 409
-          && showExternalUpdateConflict(payload, '检测到外部更新，保存已暂停', '检测到外部更新，当前草稿已保留')
+          && showExternalUpdateConflict(payload, 'External update detected; saving paused', 'An external update was detected. Your current draft has been preserved.')
         ) {
           return;
         }
 
-        uiState.setErrors(serverErrors.length ? serverErrors : ['保存失败，请稍后重试'], { title: '保存失败' });
+        uiState.setErrors(serverErrors.length ? serverErrors : ['Save failed. Try again later.'], { title: 'Save failed' });
         if (response.status === 404) {
-          uiState.setStatus('error', '无法写入', { announce: false });
+          uiState.setStatus('error', 'Unable to write', { announce: false });
         } else {
-          uiState.setStatus('error', '保存失败', { announce: false });
+          uiState.setStatus('error', 'Save failed', { announce: false });
         }
         revealErrorState(markServerIssues(payload));
         return;
@@ -437,20 +437,20 @@ export const createAdminThemeController = ({
 
       if (extractSettingsPayload(payload)) {
         loadPayload(payload, 'remote', { announceStatus: false });
-        uiState.setStatus('ok', '保存成功');
+        uiState.setStatus('ok', 'Saved successfully');
       } else {
         baseline = current;
         clearExternalUpdate();
         uiState.setDirty(false);
-        uiState.setStatus('ok', '保存成功');
+        uiState.setStatus('ok', 'Saved successfully');
       }
       clearInvalidFields();
       uiState.clearErrorBanner();
     } catch (error) {
       console.error(error);
       clearInvalidFields();
-      uiState.setErrors(['保存请求失败，请检查本地服务日志'], { title: '保存请求失败' });
-      uiState.setStatus('error', '保存失败', { announce: false });
+      uiState.setErrors(['Save request failed. Check the local server logs.'], { title: 'Save request failed' });
+      uiState.setStatus('error', 'Save failed', { announce: false });
       revealErrorState();
     } finally {
       uiState.setSaving(false);

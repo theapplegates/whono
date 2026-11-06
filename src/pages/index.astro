@@ -479,7 +479,7 @@ body[data-reading="immersive"] .reader-toggle .icon-book-open {
   color: var(--accent);
 }
 
-@media (min-width: 901px) {
+@media (min-width: 721px) {
   .nav li {
     display: flex;
     justify-content: flex-end;
@@ -495,9 +495,9 @@ body[data-reading="immersive"] .reader-toggle .icon-book-open {
   /* Keep mobile shell rules aligned with src/styles/components/layout.css. */
   :root {
     color-scheme: light;
-    --sidebar: 1fr;
+    --sidebar: 260px;
     --tap-min-h: 44px;
-    --pad-x: 20px;
+    --pad-x: 28px;
     --card-pad: 10px 12px;
     --quote-pad: 0.85rem;
     --header-gap: 4px;
@@ -513,6 +513,13 @@ body[data-reading="immersive"] .reader-toggle .icon-book-open {
     --accent: #f87171;
     --code-header-bg: #2a2a2a;
     --panel: var(--code-header-bg);
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --sidebar: 1fr;
+    --pad-x: 20px;
   }
 
   .shell {
@@ -612,7 +619,7 @@ body[data-reading="immersive"] .reader-toggle .icon-book-open {
   }
 }
 
-@media (min-width: 641px) and (max-width: 900px) {
+@media (min-width: 641px) and (max-width: 720px) {
   .sidebar {
     padding: calc(28px + env(safe-area-inset-top)) calc(var(--pad-x) + env(safe-area-inset-right))
       calc(36px + env(safe-area-inset-bottom)) calc(var(--pad-x) + env(safe-area-inset-left));
@@ -675,11 +682,11 @@ body[data-reading="immersive"] .reader-toggle .icon-book-open {
             {resolvedIntroMoreLinks.map((link, index) => (
               <>
                 {' '}
-                {index > 0 && <>或{' '}</>}
+                {index > 0 && <>or{' '}</>}
                 {index === resolvedIntroMoreLinks.length - 1 ? (
                   <span class="intro__link-tail">
                     <a href={withBase(link.href)}>{link.label}</a>
-                    <span class="intro__tail-punct">。</span>
+                    <span class="intro__tail-punct">.</span>
                   </span>
                 ) : (
                   <a href={withBase(link.href)}>{link.label}</a>
@@ -692,7 +699,7 @@ body[data-reading="immersive"] .reader-toggle .icon-book-open {
     )
   }
 
-  <h2 class="section-title section-title--index">索引</h2>
+  <h2 class="section-title section-title--index">Index</h2>
 
   <div class="list">
     {latest.map((entry) => {

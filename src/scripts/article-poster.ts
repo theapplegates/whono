@@ -12,7 +12,7 @@ export const initArticlePoster = () => {
 
   const renderPoster = async () => {
     state = 'rendering';
-    status.textContent = '正在生成…';
+    status.textContent = 'Generating…';
 
     try {
       const { renderArticlePoster } = await import('./article-poster-render');
@@ -31,11 +31,11 @@ export const initArticlePoster = () => {
       image.hidden = false;
       save.hidden = false;
       // 保留给读屏软件播报，视觉上由图片取代。
-      status.textContent = '分享卡片已生成';
+      status.textContent = 'Share card generated';
       status.classList.add('sr-only');
       state = 'ready';
     } catch {
-      status.textContent = '生成失败，点击卡片外部关闭后重试。';
+      status.textContent = 'Generation failed. Close the card by clicking outside and try again.';
       state = 'idle';
     }
   };

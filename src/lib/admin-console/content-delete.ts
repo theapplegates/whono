@@ -37,8 +37,8 @@ export class AdminContentDeleteConfirmationError extends Error {
     payload: AdminContentEditorPayload
   ) {
     super(code === 'revision-conflict'
-      ? '检测到内容文件已在外部更新，已拒绝删除，请刷新列表后再操作'
-      : '检测到内容文件路径与确认时不一致，已拒绝删除，请刷新列表后再操作');
+      ? 'The content file was updated externally; deletion was refused. Refresh the list and try again.'
+      : 'The content file path no longer matches the confirmed path; deletion was refused. Refresh the list and try again.');
     this.name = 'AdminContentDeleteConfirmationError';
     this.code = code;
     this.payload = payload;
@@ -95,7 +95,7 @@ const getTrashDestinationPath = async (
     if (!(await fileExists(bucketPath))) return destination;
   }
 
-  throw new Error('无法生成可用的内容回收站路径');
+  throw new Error('Could not generate an available content trash path.');
 };
 
 export const moveAdminContentEntryToTrash = async (
@@ -106,7 +106,7 @@ export const moveAdminContentEntryToTrash = async (
   const relativePath = toRelativeProjectPath(sourcePath);
   const expectedPrefix = `src/content/${collection}/`;
   if (!relativePath.startsWith(expectedPrefix)) {
-    throw new Error(`拒绝移动 content 根目录外的文件：${relativePath}`);
+    throw new Error(`Refusing to move a file outside the content root: ${relativePath}`);
   }
 
   const destinationPath = await getTrashDestinationPath(relativePath);

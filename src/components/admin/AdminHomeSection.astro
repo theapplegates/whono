@@ -17,14 +17,14 @@ const { homeIntroMaxLength } = Astro.props;
 ---
 
 <fieldset class="admin-section">
-  <legend class="admin-sr-only"><h2>首页设置</h2></legend>
+  <legend class="admin-sr-only"><h2>Home settings</h2></legend>
 
   <div class="admin-subsection" role="group" aria-labelledby="home-hero-title" data-reveal-scope>
     <div class="admin-subsection__head">
-      <h3 id="home-hero-title" class="admin-subsection__title">Hero 图</h3>
+      <h3 id="home-hero-title" class="admin-subsection__title">Hero image</h3>
     </div>
     <AdminSettingSwitch id="home-show-hero" checked inputAttrs={{ 'data-reveal-source': true }}>
-      显示 Hero 图
+      Show hero image
     </AdminSettingSwitch>
     <div class="admin-media" data-reveal-when-on>
       <div class="admin-media__fields">
@@ -32,9 +32,9 @@ const { homeIntroMaxLength } = Astro.props;
           <div class="admin-field__head">
             <AdminHelpTip
               id="home-hero-image-src-tip"
-              text="支持 src/assets/**、public/** 或 https:// 图床链接；留空时使用内置默认图。"
+              text="Supports src/assets/**, public/**, or https:// image host links; leave blank to use the built-in default image."
             >
-              <label class="admin-field__label" for="home-hero-image-src">图片地址</label>
+              <label class="admin-field__label" for="home-hero-image-src">Image URL</label>
             </AdminHelpTip>
           </div>
           <div class="admin-images-field-input">
@@ -44,24 +44,24 @@ const { homeIntroMaxLength } = Astro.props;
               type="text"
               inputmode="url"
               spellcheck="false"
-              placeholder="当前使用：src/assets/hero.png"
+              placeholder="Currently using: src/assets/hero.png"
               aria-describedby="home-hero-image-src-tip"
             />
             <button
               class="admin-btn admin-btn--ghost"
               type="button"
               data-admin-images-open="home.heroImageSrc"
-              aria-label="选择本地 Hero 图片"
+              aria-label="Choose local hero image"
             >
-              选择
+              Choose
             </button>
           </div>
           <p class="admin-help" data-admin-images-meta="home.heroImageSrc" hidden></p>
         </div>
         <div class="admin-field">
           <div class="admin-field__head">
-            <AdminHelpTip id="home-hero-image-alt-tip" text="图片的替代文本，供读屏和图片加载失败时使用，不在页面上显示。">
-              <label class="admin-field__label" for="home-hero-image-alt">图片说明</label>
+            <AdminHelpTip id="home-hero-image-alt-tip" text="Alternative text for screen readers and when the image fails to load; not displayed on the page.">
+              <label class="admin-field__label" for="home-hero-image-alt">Alt text</label>
             </AdminHelpTip>
           </div>
           <input
@@ -75,7 +75,7 @@ const { homeIntroMaxLength } = Astro.props;
         </div>
       </div>
       <div class="admin-media__preview">
-        <span class="admin-field__label">预览</span>
+        <span class="admin-field__label">Preview</span>
         <div
           class="admin-images-field-preview admin-images-field-preview--hero"
           data-admin-images-preview="home.heroImageSrc"
@@ -84,7 +84,7 @@ const { homeIntroMaxLength } = Astro.props;
         >
           <img alt="" loading="lazy" decoding="async" data-admin-images-preview-img="home.heroImageSrc" />
           <span class="admin-images-field-placeholder" data-admin-images-preview-placeholder="home.heroImageSrc" hidden>
-            首页 Hero 图未启用
+            Home hero image is not enabled
           </span>
         </div>
       </div>
@@ -96,14 +96,14 @@ const { homeIntroMaxLength } = Astro.props;
       <h3 id="home-intro-title" class="admin-subsection__title">
         <AdminHelpTip
           id="home-intro-tip"
-          text="Hero 图下方的导语：主文案一段；补充文案按「补充文案 + 链接 + 可选“或” + 链接」拼成一句。"
-        >首页导语</AdminHelpTip>
+          text="Intro below the hero image: one lead sentence; supporting text is assembled as “supporting text + link + optional ‘or’ + link”."
+        >Home intro</AdminHelpTip>
       </h3>
     </div>
 
     <div class="admin-subsection__block" data-reveal-scope>
       <AdminSettingSwitch id="home-show-intro-lead" checked inputAttrs={{ 'data-reveal-source': true }}>
-        显示主文案
+        Show lead text
       </AdminSettingSwitch>
       <div class="admin-field" data-reveal-when-on>
         <textarea
@@ -111,28 +111,28 @@ const { homeIntroMaxLength } = Astro.props;
           id="home-intro-lead"
           rows="2"
           maxlength={homeIntroMaxLength}
-          aria-label="首页导语主文案"
+          aria-label="Home intro lead text"
         ></textarea>
       </div>
     </div>
 
     <div class="admin-subsection__block" data-reveal-scope>
       <AdminSettingSwitch id="home-show-intro-more" checked inputAttrs={{ 'data-reveal-source': true }}>
-        显示补充文案
+        Show supporting text
       </AdminSettingSwitch>
       <div class="admin-intro-more" data-reveal-when-on>
-        <div class="admin-intro-more__sentence" role="group" aria-label="首页导语补充句式">
+        <div class="admin-intro-more__sentence" role="group" aria-label="Home intro supporting sentence">
           <textarea
             id="home-intro-more"
             class="admin-field__control admin-intro-more__text"
             rows="1"
             maxlength={homeIntroMaxLength}
-            aria-label="首页导语补充文案"
+            aria-label="Home intro supporting text"
           ></textarea>
           <select
             id="home-intro-more-link-primary"
             class="admin-field__control admin-intro-more__select"
-            aria-label="首页导语补充主链接"
+            aria-label="Home intro supporting primary link"
           >
             {ADMIN_HOME_INTRO_LINK_OPTIONS.map((option) => (
               <option value={option.id} selected={option.id === ADMIN_HOME_INTRO_LINK_DEFAULT[0]}>
@@ -141,11 +141,11 @@ const { homeIntroMaxLength } = Astro.props;
             ))}
           </select>
           <span id="home-intro-more-link-secondary-group" class="admin-intro-more__secondary" aria-disabled="true">
-            <span class="admin-intro-more__or" aria-hidden="true">或</span>
+            <span class="admin-intro-more__or" aria-hidden="true">or</span>
             <select
               id="home-intro-more-link-secondary"
               class="admin-field__control admin-intro-more__select"
-              aria-label="首页导语补充第二链接"
+              aria-label="Home intro supporting secondary link"
               disabled
             >
               {ADMIN_HOME_INTRO_LINK_OPTIONS.map((option) => (
@@ -158,14 +158,14 @@ const { homeIntroMaxLength } = Astro.props;
         </div>
         <AdminSettingSwitch
           id="home-intro-more-link-secondary-enabled"
-          tip="开启后句式为「补充文案 + 链接 或 链接」。"
+          tip="When enabled, the sentence becomes “supporting text + link or link”."
           inputAttrs={{ 'aria-controls': 'home-intro-more-link-secondary' }}
         >
-          使用第二个链接
+          Use the second link
         </AdminSettingSwitch>
         <p class="admin-help admin-preview">
-          <span class="admin-preview__label">预览</span>
-          <span id="home-intro-more-preview" class="admin-preview__value">更多文章请访问 归档。</span>
+          <span class="admin-preview__label">Preview</span>
+          <span id="home-intro-more-preview" class="admin-preview__value">For more articles, visit Archive.</span>
         </p>
       </div>
     </div>

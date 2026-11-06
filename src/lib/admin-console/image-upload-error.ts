@@ -32,12 +32,12 @@ const CLOUD_ERROR_HTTP_STATUS: Record<AdminImageCloudErrorCode, number> = {
 };
 
 const CLOUD_ERROR_MESSAGE: Record<AdminImageCloudErrorCode, string> = {
-  cloud_invalid_request: '云端图片请求无效，请检查参数后重试',
-  cloud_config_invalid: '云端图片存储配置无效，请检查服务端配置',
-  cloud_provider_unavailable: '云端图片存储暂时不可用，请稍后重试',
-  cloud_rate_limited: '云端图片存储请求过于频繁，请稍后重试',
-  cloud_timeout: '云端图片存储请求超时，请稍后重试',
-  cloud_unknown: '云端图片操作失败，请查看服务端日志'
+  cloud_invalid_request: 'Invalid cloud image request. Check the parameters and try again.',
+  cloud_config_invalid: 'Cloud image storage configuration is invalid. Check the server configuration.',
+  cloud_provider_unavailable: 'Cloud image storage is temporarily unavailable. Try again later.',
+  cloud_rate_limited: 'Too many cloud image storage requests. Try again later.',
+  cloud_timeout: 'Cloud image storage request timed out. Try again later.',
+  cloud_unknown: 'Cloud image operation failed. Check the server logs.'
 };
 
 export class AdminImageUploadError extends Error {

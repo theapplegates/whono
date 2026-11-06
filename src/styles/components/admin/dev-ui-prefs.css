@@ -502,11 +502,6 @@ body.admin-page[data-admin-dev='true'] .admin-ui-prefs__segment input:checked:fo
     display: block;
   }
 
-  :where(body[data-dev-ui='true']:not(.admin-page)) .sidebar-nav-panels {
-    order: 4;
-    width: 100%;
-  }
-
   body.admin-page[data-admin-dev='true'] .sidebar-nav-panels {
     display: none;
   }
@@ -519,6 +514,13 @@ body.admin-page[data-admin-dev='true'] .admin-ui-prefs__segment input:checked:fo
     --admin-ui-prefs-popover-block-end: 0;
     --admin-ui-prefs-popover-closed-transform: translateX(-4px);
     --admin-ui-prefs-popover-open-transform: translateX(0);
+  }
+}
+
+@media (max-width: 720px) {
+  :where(body[data-dev-ui='true']:not(.admin-page)) .sidebar-nav-panels {
+    order: 4;
+    width: 100%;
   }
 }
 

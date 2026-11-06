@@ -15,7 +15,7 @@ const { siteName, title, date, summary, authorName, authorAvatar, url, fileName 
 
 <dialog
   class="article-poster"
-  aria-label="分享卡片"
+  aria-label="Share card"
   data-article-poster
   data-site-name={siteName}
   data-title={title}
@@ -27,10 +27,10 @@ const { siteName, title, date, summary, authorName, authorAvatar, url, fileName 
 >
   <div class="article-poster__panel" tabindex="-1" autofocus>
     <p class="article-poster__status" role="status" data-article-poster-status></p>
-    <img class="article-poster__image" alt={`${title} 的分享卡片`} data-article-poster-image hidden />
-    <a class="article-poster__save" download={fileName} data-article-poster-save hidden>保存图片</a>
-    <p class="article-poster__hint">也可以长按图片保存。</p>
+    <img class="article-poster__image" alt={`Share card for ${title}`} data-article-poster-image hidden />
+    <a class="article-poster__save" download={fileName} data-article-poster-save hidden>Save image</a>
+    <p class="article-poster__hint">You can also press and hold the image to save it.</p>
     {/* 平时点遮罩或按 Esc 关闭；触屏读屏软件点不到遮罩，留这个不可见按钮。 */}
-    <button class="sr-only" type="button" tabindex="-1" data-article-poster-close>关闭</button>
+    <button class="sr-only" type="button" tabindex="-1" data-article-poster-close>Close</button>
   </div>
 </dialog>

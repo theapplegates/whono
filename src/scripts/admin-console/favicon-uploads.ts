@@ -11,8 +11,8 @@ type FaviconUploadSlot = 'png' | 'appleTouchIcon';
 
 const UPLOAD_SLOTS: readonly FaviconUploadSlot[] = ['png', 'appleTouchIcon'];
 const SLOT_LABELS: Record<FaviconUploadSlot, string> = {
-  png: '标签页图标',
-  appleTouchIcon: '触摸图标'
+  png: 'Favicon',
+  appleTouchIcon: 'Touch icon'
 };
 
 const base = import.meta.env.BASE_URL ?? '/';
@@ -59,7 +59,7 @@ export const createAdminFaviconUploads = ({
 
     previewImg.src = safeSrc ?? withBase(DEFAULT_PREVIEW_SRC[slot]);
     previewWrap.dataset.state = isCustom ? 'custom' : 'default';
-    previewWrap.title = isCustom ? value : '主题默认';
+    previewWrap.title = isCustom ? value : 'Theme default';
     if (clearBtn) clearBtn.disabled = !isCustom;
   };
 
@@ -74,7 +74,7 @@ export const createAdminFaviconUploads = ({
   const uploadFile = async (slot: FaviconUploadSlot, file: File): Promise<void> => {
     const uploadBtn = root.querySelector<HTMLButtonElement>(`[data-favicon-upload="${slot}"]`);
     if (uploadBtn) uploadBtn.disabled = true;
-    setStatus('loading', `正在上传${SLOT_LABELS[slot]}…`, { announce: false });
+    setStatus('loading', `Uploading ${SLOT_LABELS[slot]}…`, { announce: false });
 
     try {
       const formData = new FormData();
@@ -91,16 +91,16 @@ export const createAdminFaviconUploads = ({
       };
 
       if (!response.ok || !payload.ok || typeof payload.result?.path !== 'string') {
-        const message = payload.errors?.length ? payload.errors.join('；') : '站点图标上传失败';
+        const message = payload.errors?.length ? payload.errors.join('; ') : 'Site icon upload failed.';
         setStatus('warn', message);
         return;
       }
 
       applyUploadedPath(slot, payload.result.path);
-      const sizeText = payload.result.width ? `（${payload.result.width}x${payload.result.height}）` : '';
-      setStatus('ok', `已上传${SLOT_LABELS[slot]}${sizeText}，保存后生效`);
+      const sizeText = payload.result.width ? ` (${payload.result.width}x${payload.result.height})` : '';
+      setStatus('ok', `${SLOT_LABELS[slot]} uploaded${sizeText}. Changes take effect after saving.`);
     } catch {
-      setStatus('warn', '站点图标上传失败，请检查 dev server 是否在运行');
+      setStatus('warn', 'Site icon upload failed. Check that the dev server is running.');
     } finally {
       if (uploadBtn) uploadBtn.disabled = false;
     }
@@ -125,7 +125,7 @@ export const createAdminFaviconUploads = ({
     clearBtn?.addEventListener('click', () => {
       if (!input.value.trim()) return;
       applyUploadedPath(slot, '');
-      setStatus('ok', `已恢复${SLOT_LABELS[slot]}为主题默认，保存后生效`);
+      setStatus('ok', `${SLOT_LABELS[slot]} restored to the theme default. Changes take effect after saving.`);
     });
 
     input.addEventListener('input', () => refreshPreview(slot));

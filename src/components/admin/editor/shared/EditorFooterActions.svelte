@@ -19,8 +19,8 @@ let {
   busy,
   dirty,
   canWriteContent,
-  saveLabel = '保存内容',
-  resetLabel = '还原',
+  saveLabel = 'Save content',
+  resetLabel = 'Reset',
   onReset,
   onSave
 }: Props = $props();

@@ -142,7 +142,7 @@
   display: none;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 721px) {
   .nav li {
     display: flex;
     justify-content: flex-end;
@@ -909,7 +909,7 @@ body.admin-page .sidebar-actions .icon-button[data-tooltip]::after {
 }
 
 /* 公开站点窄屏壳层；后台路由通过 body.admin-page 保持桌面工具布局。 */
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   :where(body:not(.admin-page)) .shell {
     grid-template-columns: 1fr;
   }
@@ -1031,7 +1031,7 @@ body.admin-page .sidebar-actions .icon-button[data-tooltip]::after {
   }
 }
 
-@media (min-width: 641px) and (max-width: 900px) {
+@media (min-width: 641px) and (max-width: 720px) {
   :where(body:not(.admin-page)) .sidebar {
     padding: calc(28px + env(safe-area-inset-top)) calc(var(--pad-x) + env(safe-area-inset-right)) calc(36px + env(safe-area-inset-bottom)) calc(var(--pad-x) + env(safe-area-inset-left));
     padding-bottom: calc(20px + env(safe-area-inset-bottom));
@@ -1084,7 +1084,7 @@ body.admin-page .sidebar-actions .icon-button[data-tooltip]::after {
   align-self: flex-end;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   :where(body:not(.admin-page)) .sidebar-actions {
     margin-left: auto;
     gap: 4px;
@@ -1172,7 +1172,7 @@ body.admin-page .sidebar-actions .icon-button[data-tooltip]::after {
 }
 
 /* 窄屏按钮贴近页面右上角：居中向上的提示会撑出横向滚动，顶部也会超出视口，改为按钮下方右对齐。 */
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   :where(body:not(.admin-page)) .sidebar-actions .icon-button[data-tooltip]::after {
     top: calc(100% + 8px);
     right: 0;

@@ -725,14 +725,14 @@ describe('admin content essay write contract', () => {
     expect(payload.ok).toBe(false);
     expect(payload.errors).toEqual(
       expect.arrayContaining([
-        '正文引用的本地图片不存在：src/content/essay/demo-assets/missing.webp',
-        '正文引用的本地图片不存在：src/content/essay/demo-assets/missing-figure.webp',
-        '正文引用的本地图片不存在：src/content/essay/demo-assets/missing-rich-caption-figure.webp',
-        '正文引用的本地图片不存在：src/content/essay/demo-assets/missing-gallery.webp'
+        'A local image referenced in the body does not exist: src/content/essay/demo-assets/missing.webp',
+        'A local image referenced in the body does not exist: src/content/essay/demo-assets/missing-figure.webp',
+        'A local image referenced in the body does not exist: src/content/essay/demo-assets/missing-rich-caption-figure.webp',
+        'A local image referenced in the body does not exist: src/content/essay/demo-assets/missing-gallery.webp'
       ])
     );
     expect(payload.errors).not.toContain(
-      '正文引用的本地图片不存在：src/content/essay/demo-assets/missing-in-code.webp'
+      'A local image referenced in the body does not exist: src/content/essay/demo-assets/missing-in-code.webp'
     );
     expect(payload.issues).toEqual(
       expect.arrayContaining([
@@ -887,7 +887,7 @@ describe('admin content essay write contract', () => {
     expect(response.status).toBe(409);
     const payload = JSON.parse(await response.text());
     expect(payload.ok).toBe(false);
-    expect(payload.errors[0]).toContain('外部更新');
+    expect(payload.errors[0]).toContain('updated externally');
     expect(payload.payload.values.title).toBe('External Change');
   });
 

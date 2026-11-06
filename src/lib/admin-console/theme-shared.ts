@@ -41,9 +41,9 @@ export {
 
 export const ADMIN_SITE_FAVICON_SLOTS = ['svg', 'png', 'appleTouchIcon'] as const satisfies readonly SiteFaviconSlot[];
 export const ADMIN_SITE_FAVICON_SLOT_LABELS: Record<SiteFaviconSlot, string> = {
-  svg: '站点图标（SVG）',
-  png: '标签页图标（PNG）',
-  appleTouchIcon: '触摸图标（PNG）'
+  svg: 'Site icon (SVG)',
+  png: 'Favicon (PNG)',
+  appleTouchIcon: 'Touch icon (PNG)'
 };
 
 export const ADMIN_NAV_IDS = ['essay', 'bits', 'memo', 'archive', 'about'] as const satisfies readonly SidebarNavId[];
@@ -55,7 +55,7 @@ export const ADMIN_HERO_PRESET_SET: ReadonlySet<HeroPresetId> = new Set(ADMIN_HE
 export const ADMIN_HERO_IMAGE_ALT_DEFAULT = 'Whono theme preview';
 export const ADMIN_HERO_IMAGE_ALT_MAX_LENGTH = 120;
 
-export const ADMIN_ARTICLE_META_DATE_LABEL_DEFAULT = '发布于：';
+export const ADMIN_ARTICLE_META_DATE_LABEL_DEFAULT = 'Published:';
 export const ADMIN_ARTICLE_META_DATE_LABEL_MAX_LENGTH = 20;
 
 export const ADMIN_SIDEBAR_DIVIDER_VARIANTS = [
@@ -66,9 +66,9 @@ export const ADMIN_SIDEBAR_DIVIDER_VARIANTS = [
 export const ADMIN_SIDEBAR_DIVIDER_DEFAULT: SidebarDividerVariant = 'default';
 export const ADMIN_SIDEBAR_DIVIDER_SET: ReadonlySet<SidebarDividerVariant> = new Set(ADMIN_SIDEBAR_DIVIDER_VARIANTS);
 export const ADMIN_SIDEBAR_DIVIDER_OPTIONS = [
-  { id: 'default', label: '默认' },
-  { id: 'subtle', label: '弱化' },
-  { id: 'none', label: '隐藏' }
+  { id: 'default', label: 'Default' },
+  { id: 'subtle', label: 'Subtle' },
+  { id: 'none', label: 'Hidden' }
 ] as const satisfies readonly {
   id: SidebarDividerVariant;
   label: string;
@@ -90,12 +90,12 @@ export const ADMIN_HOME_INTRO_LINK_DEFAULT = ['archive', 'essay'] as const satis
 export const ADMIN_HOME_INTRO_LINK_LIMIT = 2;
 export const ADMIN_HOME_INTRO_LINK_KEY_SET: ReadonlySet<HomeIntroLinkKey> = new Set(ADMIN_HOME_INTRO_LINK_KEYS);
 export const ADMIN_HOME_INTRO_LINK_OPTIONS = [
-  { id: 'archive', label: '归档', href: '/archive/' },
-  { id: 'essay', label: '随笔', href: '/essay/' },
-  { id: 'bits', label: '絮语', href: '/bits/' },
-  { id: 'memo', label: '小记', href: '/memo/' },
-  { id: 'about', label: '关于', href: '/about/' },
-  { id: 'tag', label: '#标签', href: '/archive/?picker=tag' }
+  { id: 'archive', label: 'Archive', href: '/archive/' },
+  { id: 'essay', label: 'Essays', href: '/essay/' },
+  { id: 'bits', label: 'Bits', href: '/bits/' },
+  { id: 'memo', label: 'Memo', href: '/memo/' },
+  { id: 'about', label: 'About', href: '/about/' },
+  { id: 'tag', label: '#Tags', href: '/archive/?picker=tag' }
 ] as const satisfies readonly {
   id: HomeIntroLinkKey;
   label: string;
@@ -106,12 +106,12 @@ export const ADMIN_HOME_INTRO_LINK_OPTIONS = [
 export const ADMIN_ARTICLE_SHARE_PLATFORM_OPTIONS = [
   { id: 'x', label: 'X' },
   { id: 'facebook', label: 'Facebook' },
-  { id: 'weibo', label: '微博' },
+  { id: 'weibo', label: 'Weibo' },
   { id: 'telegram', label: 'Telegram' },
   { id: 'linkedin', label: 'LinkedIn' },
-  { id: 'email', label: '邮件' },
-  { id: 'poster', label: '分享卡片' },
-  { id: 'copy', label: '复制链接' }
+  { id: 'email', label: 'Email' },
+  { id: 'poster', label: 'Share card' },
+  { id: 'copy', label: 'Copy link' }
 ] as const satisfies readonly { id: ArticleSharePlatformId; label: string }[];
 export const ADMIN_ARTICLE_SHARE_PLATFORM_DEFAULT = ['x', 'facebook', 'email', 'poster', 'copy'] as const satisfies readonly ArticleSharePlatformId[];
 
@@ -180,7 +180,7 @@ export const ADMIN_NAV_ORNAMENT_DEFAULT = '·';
 export const ADMIN_NAV_ORNAMENT_MAX_LENGTH = 4;
 export const ADMIN_FOOTER_START_YEAR_MIN = 1900;
 export const ADMIN_FOOTER_COPYRIGHT_MAX_LENGTH = 120;
-export const ADMIN_OVERVIEW_HIDDEN_MESSAGE_DEFAULT = '作者暂未公开此页面。';
+export const ADMIN_OVERVIEW_HIDDEN_MESSAGE_DEFAULT = 'The author has not made this page public yet.';
 export const ADMIN_OVERVIEW_HIDDEN_MESSAGE_MAX_LENGTH = 120;
 
 export const ADMIN_LOCALE_RE = /^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
@@ -730,53 +730,53 @@ export const validateAdminThemeSettings = (
     issues.push(createValidationIssue(path, message));
   };
 
-  if (!settings.site.title) pushIssue('site.title', '站点标题不能为空');
-  if (!settings.site.description) pushIssue('site.description', '站点描述不能为空');
+  if (!settings.site.title) pushIssue('site.title', 'Site title is required.');
+  if (!settings.site.description) pushIssue('site.description', 'Site description is required.');
   if (!settings.site.defaultLocale) {
-    pushIssue('site.defaultLocale', '默认语言不能为空');
+    pushIssue('site.defaultLocale', 'Default language is required.');
   } else if (!ADMIN_LOCALE_RE.test(settings.site.defaultLocale)) {
-    pushIssue('site.defaultLocale', '默认语言格式无效（示例：zh-CN）');
+    pushIssue('site.defaultLocale', 'Invalid default language format (example: zh-CN).');
   }
 
   if (!Number.isInteger(settings.site.footer?.startYear)) {
-    pushIssue('site.footer.startYear', '页脚起始年份必须是整数');
+    pushIssue('site.footer.startYear', 'Footer start year must be an integer.');
   } else if (
     settings.site.footer.startYear < ADMIN_FOOTER_START_YEAR_MIN ||
     settings.site.footer.startYear > footerStartYearMax
   ) {
-    pushIssue('site.footer.startYear', '页脚起始年份超出允许范围');
+    pushIssue('site.footer.startYear', 'Footer start year is out of range.');
   }
 
   if (typeof settings.site.footer?.showCurrentYear !== 'boolean') {
-    pushIssue('site.footer.showCurrentYear', '是否显示当前年必须是布尔值');
+    pushIssue('site.footer.showCurrentYear', 'Show current year must be a boolean.');
   }
 
   if (!settings.site.footer?.copyright) {
-    pushIssue('site.footer.copyright', '页脚版权行不能为空');
+    pushIssue('site.footer.copyright', 'Footer copyright line is required.');
   } else if (
     settings.site.footer.copyright.includes('\n') ||
     settings.site.footer.copyright.includes('\r')
   ) {
-    pushIssue('site.footer.copyright', '页脚版权行只允许单行文本');
+    pushIssue('site.footer.copyright', 'Footer copyright line must be a single line.');
   } else if (settings.site.footer.copyright.length > ADMIN_FOOTER_COPYRIGHT_MAX_LENGTH) {
-    pushIssue('site.footer.copyright', `页脚版权行不能超过 ${ADMIN_FOOTER_COPYRIGHT_MAX_LENGTH} 个字符`);
+    pushIssue('site.footer.copyright', `Footer copyright line must be no more than ${ADMIN_FOOTER_COPYRIGHT_MAX_LENGTH} characters.`);
   }
 
   if (typeof settings.site.adminOverview?.publicVisible !== 'boolean') {
-    pushIssue('site.adminOverview.publicVisible', 'Admin Overview 公开展示开关必须是布尔值');
+    pushIssue('site.adminOverview.publicVisible', 'The Admin Overview public visibility toggle must be a boolean.');
   }
 
   if (!settings.site.adminOverview?.hiddenMessage) {
-    pushIssue('site.adminOverview.hiddenMessage', 'Admin Overview 关闭态文案不能为空');
+    pushIssue('site.adminOverview.hiddenMessage', 'Admin Overview hidden message is required.');
   } else if (
     settings.site.adminOverview.hiddenMessage.includes('\n') ||
     settings.site.adminOverview.hiddenMessage.includes('\r')
   ) {
-    pushIssue('site.adminOverview.hiddenMessage', 'Admin Overview 关闭态文案只允许单行文本');
+    pushIssue('site.adminOverview.hiddenMessage', 'Admin Overview hidden message must be a single line.');
   } else if (settings.site.adminOverview.hiddenMessage.length > ADMIN_OVERVIEW_HIDDEN_MESSAGE_MAX_LENGTH) {
     pushIssue(
       'site.adminOverview.hiddenMessage',
-      `Admin Overview 关闭态文案不能超过 ${ADMIN_OVERVIEW_HIDDEN_MESSAGE_MAX_LENGTH} 个字符`
+      `Admin Overview hidden message must be no more than ${ADMIN_OVERVIEW_HIDDEN_MESSAGE_MAX_LENGTH} characters.`
     );
   }
 
@@ -789,14 +789,14 @@ export const validateAdminThemeSettings = (
     if (normalizeAdminSiteFaviconPath(slot, slotValue) === undefined) {
       pushIssue(
         `site.favicon.${slot}`,
-        `${slotLabel} 只允许 public/**（或 / 开头）的 ${extHint} 路径，不允许 URL、..、?、#`
+        `${slotLabel} only accepts ${extHint} paths under public/** (or paths starting with /); URLs, .., ?, and # are not allowed.`
       );
       return;
     }
 
     const localFilePath = getAdminSiteFaviconLocalFilePath(slotValue);
     if (options.localFileExists && !options.localFileExists(localFilePath)) {
-      pushIssue(`site.favicon.${slot}`, `${slotLabel} 指向的本地文件不存在：${localFilePath}`);
+      pushIssue(`site.favicon.${slot}`, `${slotLabel} points to a local file that does not exist: ${localFilePath}`);
     }
   });
 
@@ -804,19 +804,19 @@ export const validateAdminThemeSettings = (
     settings.site.socialLinks?.github &&
     !isAdminAllowedHttpsUrl(settings.site.socialLinks.github, ADMIN_GITHUB_HOSTS)
   ) {
-    pushIssue('site.socialLinks.github', 'GitHub 链接只允许 https://github.com/... ');
+    pushIssue('site.socialLinks.github', 'GitHub link must use https://github.com/...');
   }
   if (
     settings.site.socialLinks?.x &&
     !isAdminAllowedHttpsUrl(settings.site.socialLinks.x, ADMIN_X_HOSTS)
   ) {
-    pushIssue('site.socialLinks.x', 'X / Twitter 链接只允许 https://x.com/... 或 https://twitter.com/... ');
+    pushIssue('site.socialLinks.x', 'X / Twitter link must use https://x.com/... or https://twitter.com/...');
   }
   if (
     settings.site.socialLinks?.email &&
     !ADMIN_EMAIL_RE.test(normalizeEmail(settings.site.socialLinks.email))
   ) {
-    pushIssue('site.socialLinks.email', 'Email 必须是合法邮箱地址');
+    pushIssue('site.socialLinks.email', 'Email must be a valid email address.');
   }
 
   const presetOrder = settings.site.socialLinks.presetOrder;
@@ -851,99 +851,99 @@ export const validateAdminThemeSettings = (
     if (orderIssue === 'range') {
       pushIssue(
         `site.socialLinks.presetOrder.${id}`,
-        `${rowLabel} 的位置排序必须为 ${ADMIN_SOCIAL_ORDER_MIN}-${ADMIN_SOCIAL_ORDER_MAX} 的整数`
+        `${rowLabel} position order must be an integer from ${ADMIN_SOCIAL_ORDER_MIN} to ${ADMIN_SOCIAL_ORDER_MAX}`
       );
       return;
     }
     if (orderIssue === 'duplicate') {
-      pushIssue(`site.socialLinks.presetOrder.${id}`, `社交链接位置排序不能重复：${presetOrder[id]}`);
+      pushIssue(`site.socialLinks.presetOrder.${id}`, `Social link position orders must be unique: ${presetOrder[id]}`);
     }
   });
 
   if (customLinks.length > ADMIN_SOCIAL_CUSTOM_LIMIT) {
-    pushIssue('site.socialLinks.custom', `自定义链接最多只能添加 ${ADMIN_SOCIAL_CUSTOM_LIMIT} 条`);
+    pushIssue('site.socialLinks.custom', `You can add at most ${ADMIN_SOCIAL_CUSTOM_LIMIT} custom links.`);
   }
 
   const seenCustomIds = new Set<string>();
   customLinks.forEach((item, index) => {
     const basePath = `site.socialLinks.custom[${index}]`;
     if (!item.id) {
-      pushIssue(`${basePath}.id`, `自定义链接 #${index + 1} 的 ID 不能为空`);
+      pushIssue(`${basePath}.id`, `Custom link #${index + 1} ID is required.`);
     } else {
       if (item.id.includes('\n') || item.id.includes('\r')) {
-        pushIssue(`${basePath}.id`, `自定义链接 #${index + 1} 的 ID 只允许单行文本`);
+        pushIssue(`${basePath}.id`, `Custom link #${index + 1} ID must be a single line.`);
       }
       if (seenCustomIds.has(item.id)) {
-        pushIssue(`${basePath}.id`, `自定义链接 ID 重复：${item.id}`);
+        pushIssue(`${basePath}.id`, `Duplicate custom link ID: ${item.id}`);
       }
       seenCustomIds.add(item.id);
     }
 
     if (!item.label) {
-      pushIssue(`${basePath}.label`, `自定义链接 #${index + 1} 的显示名称不能为空`);
+      pushIssue(`${basePath}.label`, `Custom link #${index + 1} display name is required.`);
     } else if (item.label.includes('\n') || item.label.includes('\r')) {
-      pushIssue(`${basePath}.label`, `自定义链接 #${index + 1} 的显示名称只允许单行文本`);
+      pushIssue(`${basePath}.label`, `Custom link #${index + 1} display name must be a single line.`);
     }
 
     if (!item.href || !isAdminAllowedHttpsUrl(item.href)) {
-      pushIssue(`${basePath}.href`, `自定义链接 #${index + 1} 的链接必须是合法 https:// 地址`);
+      pushIssue(`${basePath}.href`, `Custom link #${index + 1} URL must be a valid https:// address.`);
     }
     if (!isAdminSocialIconKey(item.iconKey)) {
-      pushIssue(`${basePath}.iconKey`, `自定义链接 #${index + 1} 的图标必须从白名单中选择`);
+      pushIssue(`${basePath}.iconKey`, `Custom link #${index + 1} icon must be selected from the allowed list.`);
     }
     const orderIssue = customOrderIssues.get(index);
     if (orderIssue === 'range') {
       pushIssue(
         `${basePath}.order`,
-        `自定义链接 #${index + 1} 的位置排序必须为 ${ADMIN_SOCIAL_ORDER_MIN}-${ADMIN_SOCIAL_ORDER_MAX} 的整数`
+        `Custom link #${index + 1} position order must be an integer from ${ADMIN_SOCIAL_ORDER_MIN} to ${ADMIN_SOCIAL_ORDER_MAX}`
       );
     } else if (orderIssue === 'duplicate') {
-      pushIssue(`${basePath}.order`, `社交链接位置排序不能重复：${item.order}`);
+      pushIssue(`${basePath}.order`, `Social link position orders must be unique: ${item.order}`);
     }
     if (typeof item.visible !== 'boolean') {
-      pushIssue(`${basePath}.visible`, `自定义链接 #${index + 1} 的 visible 必须是布尔值`);
+      pushIssue(`${basePath}.visible`, `Custom link #${index + 1} visible must be a boolean.`);
     }
   });
 
-  if (!settings.shell.brandTitle) pushIssue('shell.brandTitle', '侧栏站点名不能为空');
-  if (!settings.shell.quote) pushIssue('shell.quote', '侧栏引用文案不能为空');
+  if (!settings.shell.brandTitle) pushIssue('shell.brandTitle', 'Sidebar site name is required.');
+  if (!settings.shell.quote) pushIssue('shell.quote', 'Sidebar quote is required.');
 
   if (!settings.home.introLead) {
-    pushIssue('home.introLead', '首页导语主文案不能为空');
+    pushIssue('home.introLead', 'Home intro lead is required.');
   } else if (settings.home.introLead.length > ADMIN_HOME_INTRO_MAX_LENGTH) {
-    pushIssue('home.introLead', `首页导语主文案不能超过 ${ADMIN_HOME_INTRO_MAX_LENGTH} 个字符`);
+    pushIssue('home.introLead', `Home intro lead must be no more than ${ADMIN_HOME_INTRO_MAX_LENGTH} characters.`);
   }
 
   if (typeof settings.home.showIntroLead !== 'boolean') {
-    pushIssue('home.showIntroLead', '首页导语主文案展示开关必须是布尔值');
+    pushIssue('home.showIntroLead', 'The show home intro lead toggle must be a boolean.');
   }
 
   if (!settings.home.introMore) {
-    pushIssue('home.introMore', '首页导语补充文案不能为空');
+    pushIssue('home.introMore', 'Home intro extra text is required.');
   } else if (settings.home.introMore.length > ADMIN_HOME_INTRO_MAX_LENGTH) {
-    pushIssue('home.introMore', `首页导语补充文案不能超过 ${ADMIN_HOME_INTRO_MAX_LENGTH} 个字符`);
+    pushIssue('home.introMore', `Home intro extra text must be no more than ${ADMIN_HOME_INTRO_MAX_LENGTH} characters.`);
   }
 
   if (typeof settings.home.showIntroMore !== 'boolean') {
-    pushIssue('home.showIntroMore', '首页导语补充文案展示开关必须是布尔值');
+    pushIssue('home.showIntroMore', 'The show home intro extra text toggle must be a boolean.');
   }
 
   if (!Array.isArray(settings.home.introMoreLinks)) {
-    pushIssue('home.introMoreLinks', '首页导语补充链接必须是数组');
+    pushIssue('home.introMoreLinks', 'Home intro extra links must be an array.');
   } else if (
     settings.home.introMoreLinks.length < 1 ||
     settings.home.introMoreLinks.length > ADMIN_HOME_INTRO_LINK_LIMIT
   ) {
-    pushIssue('home.introMoreLinks', `首页导语补充链接必须选择 1-${ADMIN_HOME_INTRO_LINK_LIMIT} 个入口`);
+    pushIssue('home.introMoreLinks', `Home intro extra links must include 1-${ADMIN_HOME_INTRO_LINK_LIMIT} entries.`);
   } else {
     const seenHomeIntroLinks = new Set<HomeIntroLinkKey>();
     settings.home.introMoreLinks.forEach((linkKey, index) => {
       if (!isAdminHomeIntroLinkKey(linkKey)) {
-        pushIssue(`home.introMoreLinks[${index}]`, `首页导语补充链接 #${index + 1} 非法：${String(linkKey)}`);
+        pushIssue(`home.introMoreLinks[${index}]`, `Home intro extra link #${index + 1} is invalid: ${String(linkKey)}`);
         return;
       }
       if (seenHomeIntroLinks.has(linkKey)) {
-        pushIssue(`home.introMoreLinks[${index}]`, `首页导语补充链接不能重复：${linkKey}`);
+        pushIssue(`home.introMoreLinks[${index}]`, `Duplicate home intro extra link: ${linkKey}`);
         return;
       }
       seenHomeIntroLinks.add(linkKey);
@@ -951,7 +951,7 @@ export const validateAdminThemeSettings = (
   }
 
   if (!ADMIN_HERO_PRESET_SET.has(settings.home.heroPresetId)) {
-    pushIssue('home.heroPresetId', 'Hero 展示模式只允许 default/none');
+    pushIssue('home.heroPresetId', 'Hero display mode must be default or none.');
   }
 
   if (
@@ -960,168 +960,168 @@ export const validateAdminThemeSettings = (
   ) {
     pushIssue(
       'home.heroImageSrc',
-      'Hero 图片地址只允许 src/assets/**、public/**（或 / 开头路径）以及 https:// 图片地址'
+      'Hero image URL must be a src/assets/** path, a public/** path (or one starting with /), or an https:// image URL.'
     );
   } else if (settings.home.heroImageSrc) {
     const localFilePath = getAdminHeroImageLocalFilePath(settings.home.heroImageSrc);
     if (localFilePath && options.localFileExists && !options.localFileExists(localFilePath)) {
-      pushIssue('home.heroImageSrc', `Hero 图片指向的本地文件不存在：${localFilePath}`);
+      pushIssue('home.heroImageSrc', `Hero image points to a local file that does not exist: ${localFilePath}`);
     }
   }
 
   if (!settings.home.heroImageAlt) {
-    pushIssue('home.heroImageAlt', 'Hero 图片说明不能为空');
+    pushIssue('home.heroImageAlt', 'Hero image alt text is required.');
   } else if (
     settings.home.heroImageAlt.includes('\n') ||
     settings.home.heroImageAlt.includes('\r')
   ) {
-    pushIssue('home.heroImageAlt', 'Hero 图片说明只允许单行文本');
+    pushIssue('home.heroImageAlt', 'Hero image alt text must be a single line.');
   } else if (settings.home.heroImageAlt.length > ADMIN_HERO_IMAGE_ALT_MAX_LENGTH) {
-    pushIssue('home.heroImageAlt', `Hero 图片说明不能超过 ${ADMIN_HERO_IMAGE_ALT_MAX_LENGTH} 个字符`);
+    pushIssue('home.heroImageAlt', `Hero image alt text must be no more than ${ADMIN_HERO_IMAGE_ALT_MAX_LENGTH} characters.`);
   }
 
   const pageTitleMap: Array<[string | null, string, string]> = [
-    [settings.page.essay?.title, '/essay/ 页面主标题', 'page.essay.title'],
-    [settings.page.archive?.title, '/archive/ 页面主标题', 'page.archive.title'],
-    [settings.page.bits?.title, '/bits/ 页面主标题', 'page.bits.title'],
-    [settings.page.memo?.title, '/memo/ 页面主标题', 'page.memo.title'],
-    [settings.page.about?.title, '/about/ 页面主标题', 'page.about.title']
+    [settings.page.essay?.title, '/essay/ page title', 'page.essay.title'],
+    [settings.page.archive?.title, '/archive/ page title', 'page.archive.title'],
+    [settings.page.bits?.title, '/bits/ page title', 'page.bits.title'],
+    [settings.page.memo?.title, '/memo/ page title', 'page.memo.title'],
+    [settings.page.about?.title, '/about/ page title', 'page.about.title']
   ];
 
   pageTitleMap.forEach(([title, label, path]) => {
     if (title == null) return;
     if (typeof title !== 'string') {
-      pushIssue(path, `${label} 必须是字符串或留空`);
+      pushIssue(path, `${label} must be a string or left empty.`);
       return;
     }
     if (title.includes('\n') || title.includes('\r')) {
-      pushIssue(path, `${label} 只允许单行文本`);
+      pushIssue(path, `${label} must be a single line.`);
     }
     if (title.length > ADMIN_PAGE_TITLE_MAX_LENGTH) {
-      pushIssue(path, `${label} 不能超过 ${ADMIN_PAGE_TITLE_MAX_LENGTH} 个字符`);
+      pushIssue(path, `${label} must be no more than ${ADMIN_PAGE_TITLE_MAX_LENGTH} characters.`);
     }
   });
 
   const pageSubtitleMap: Array<[string | null, string, string]> = [
-    [settings.page.essay?.subtitle, '/essay/ 页面副标题', 'page.essay.subtitle'],
-    [settings.page.archive?.subtitle, '/archive/ 页面副标题', 'page.archive.subtitle'],
-    [settings.page.bits?.subtitle, '/bits/ 页面副标题', 'page.bits.subtitle'],
-    [settings.page.memo?.subtitle, '/memo/ 页面副标题', 'page.memo.subtitle'],
-    [settings.page.about?.subtitle, '/about/ 页面副标题', 'page.about.subtitle']
+    [settings.page.essay?.subtitle, '/essay/ page subtitle', 'page.essay.subtitle'],
+    [settings.page.archive?.subtitle, '/archive/ page subtitle', 'page.archive.subtitle'],
+    [settings.page.bits?.subtitle, '/bits/ page subtitle', 'page.bits.subtitle'],
+    [settings.page.memo?.subtitle, '/memo/ page subtitle', 'page.memo.subtitle'],
+    [settings.page.about?.subtitle, '/about/ page subtitle', 'page.about.subtitle']
   ];
 
   pageSubtitleMap.forEach(([subtitle, label, path]) => {
     if (subtitle == null) return;
     if (typeof subtitle !== 'string') {
-      pushIssue(path, `${label} 必须是字符串或留空`);
+      pushIssue(path, `${label} must be a string or left empty.`);
       return;
     }
     if (subtitle.includes('\n') || subtitle.includes('\r')) {
-      pushIssue(path, `${label} 只允许单行文本`);
+      pushIssue(path, `${label} must be a single line.`);
     }
     if (subtitle.length > ADMIN_PAGE_SUBTITLE_MAX_LENGTH) {
-      pushIssue(path, `${label} 不能超过 ${ADMIN_PAGE_SUBTITLE_MAX_LENGTH} 个字符`);
+      pushIssue(path, `${label} must be no more than ${ADMIN_PAGE_SUBTITLE_MAX_LENGTH} characters.`);
     }
   });
 
   if (!settings.page.bits?.defaultAuthor?.name) {
-    pushIssue('page.bits.defaultAuthor.name', 'Bits 默认作者名不能为空');
+    pushIssue('page.bits.defaultAuthor.name', 'Bits default author name is required.');
   }
   if (settings.page.bits?.defaultAuthor?.avatar) {
     if (normalizeAdminBitsAvatarPath(settings.page.bits.defaultAuthor.avatar) === undefined) {
       pushIssue(
         'page.bits.defaultAuthor.avatar',
-        'Bits 默认头像只允许相对图片路径（例如 author/avatar.webp），不要带 public/、不要以 / 开头，也不要包含 URL、..、?、#'
+        'Bits default avatar must be a relative image path (for example author/avatar.webp); do not include public/, do not start with /, and do not include URLs, .., ?, or #.'
       );
     }
   }
 
   if (typeof settings.ui?.articleMeta?.showDate !== 'boolean') {
-    pushIssue('ui.articleMeta.showDate', '文章元信息里的“显示发布日期”必须是布尔值');
+    pushIssue('ui.articleMeta.showDate', '"Show publish date" in article metadata must be a boolean.');
   }
 
   if (typeof settings.ui?.articleMeta?.dateLabel !== 'string') {
-    pushIssue('ui.articleMeta.dateLabel', '文章元信息里的“日期前缀”必须是字符串');
+    pushIssue('ui.articleMeta.dateLabel', '"Date prefix" in article metadata must be a string.');
   } else if (
     settings.ui.articleMeta.dateLabel.includes('\n') ||
     settings.ui.articleMeta.dateLabel.includes('\r')
   ) {
-    pushIssue('ui.articleMeta.dateLabel', '文章元信息里的“日期前缀”只允许单行文本');
+    pushIssue('ui.articleMeta.dateLabel', '"Date prefix" in article metadata must be a single line.');
   } else if (settings.ui.articleMeta.dateLabel.length > ADMIN_ARTICLE_META_DATE_LABEL_MAX_LENGTH) {
     pushIssue(
       'ui.articleMeta.dateLabel',
-      `文章元信息里的“日期前缀”不能超过 ${ADMIN_ARTICLE_META_DATE_LABEL_MAX_LENGTH} 个字符`
+      `"Date prefix" in article metadata must be no more than ${ADMIN_ARTICLE_META_DATE_LABEL_MAX_LENGTH} characters.`
     );
   }
 
   if (typeof settings.ui?.articleMeta?.showTags !== 'boolean') {
-    pushIssue('ui.articleMeta.showTags', '文章元信息里的“列表显示标签”必须是布尔值');
+    pushIssue('ui.articleMeta.showTags', '"Show tags in lists" in article metadata must be a boolean.');
   }
 
   if (typeof settings.ui?.articleMeta?.showHeaderTags !== 'boolean') {
-    pushIssue('ui.articleMeta.showHeaderTags', '文章元信息里的“文章标题下方显示标签”必须是布尔值');
+    pushIssue('ui.articleMeta.showHeaderTags', '"Show tags below article title" in article metadata must be a boolean.');
   }
 
   if (typeof settings.ui?.articleMeta?.showWordCount !== 'boolean') {
-    pushIssue('ui.articleMeta.showWordCount', '文章元信息里的“显示字数”必须是布尔值');
+    pushIssue('ui.articleMeta.showWordCount', '"Show word count" in article metadata must be a boolean.');
   }
 
   if (typeof settings.ui?.articleMeta?.showReadingTime !== 'boolean') {
-    pushIssue('ui.articleMeta.showReadingTime', '文章元信息里的“显示阅读时长”必须是布尔值');
+    pushIssue('ui.articleMeta.showReadingTime', '"Show reading time" in article metadata must be a boolean.');
   }
 
   if (typeof settings.ui?.articleToc?.showEntry !== 'boolean') {
-    pushIssue('ui.articleToc.showEntry', '文章目录里的“显示右侧目录”必须是布尔值');
+    pushIssue('ui.articleToc.showEntry', '"Show table of contents on the right" in the article table of contents must be a boolean.');
   }
 
   if (typeof settings.ui?.articleFooter?.showTags !== 'boolean') {
-    pushIssue('ui.articleFooter.showTags', '文章底部里的“显示标签”必须是布尔值');
+    pushIssue('ui.articleFooter.showTags', '"Show tags" in the article footer must be a boolean.');
   }
 
   if (typeof settings.ui?.articleFooter?.showPrevNext !== 'boolean') {
-    pushIssue('ui.articleFooter.showPrevNext', '文章底部里的“显示上一篇 / 下一篇”必须是布尔值');
+    pushIssue('ui.articleFooter.showPrevNext', '"Show previous / next" in the article footer must be a boolean.');
   }
 
   const sharePlatforms: unknown = settings.ui?.articleFooter?.sharePlatforms;
   const knownSharePlatforms: readonly unknown[] = ADMIN_ARTICLE_SHARE_PLATFORM_OPTIONS.map(({ id }) => id);
   if (!Array.isArray(sharePlatforms) || sharePlatforms.some((id) => !knownSharePlatforms.includes(id))) {
-    pushIssue('ui.articleFooter.sharePlatforms', '文章底部里的“分享按钮”必须是受支持的平台列表');
+    pushIssue('ui.articleFooter.sharePlatforms', '"Share buttons" in the article footer must be a list of supported platforms.');
   }
 
   if (typeof settings.ui?.sidebarActions?.showRssLink !== 'boolean') {
-    pushIssue('ui.sidebarActions.showRssLink', '侧栏图标里的“显示 RSS 入口”必须是布尔值');
+    pushIssue('ui.sidebarActions.showRssLink', '"Show RSS link" in sidebar actions must be a boolean.');
   }
 
   if (typeof settings.ui?.sidebarActions?.showThemeToggle !== 'boolean') {
-    pushIssue('ui.sidebarActions.showThemeToggle', '侧栏图标里的“显示主题切换入口”必须是布尔值');
+    pushIssue('ui.sidebarActions.showThemeToggle', '"Show theme toggle" in sidebar actions must be a boolean.');
   }
 
   if (typeof settings.ui?.sidebarActions?.showAdminEntry !== 'boolean') {
-    pushIssue('ui.sidebarActions.showAdminEntry', '侧栏图标里的“显示 /admin/ 入口”必须是布尔值');
+    pushIssue('ui.sidebarActions.showAdminEntry', '"Show /admin/ link" in sidebar actions must be a boolean.');
   }
 
   if (!isAdminSidebarDividerVariant(settings.ui?.layout?.sidebarDivider ?? '')) {
-    pushIssue('ui.layout.sidebarDivider', '侧栏分隔线只允许 默认 / 弱化 / 隐藏');
+    pushIssue('ui.layout.sidebarDivider', 'Sidebar divider must be Default / Subtle / Hidden.');
   }
 
   if (!isAdminTypographyFontId('readable', settings.ui?.typography?.readable ?? '')) {
-    pushIssue('ui.typography.readable', '正文字体必须从注册表可选项中选择');
+    pushIssue('ui.typography.readable', 'Body font must be one of the registered options.');
   }
 
   if (!isAdminTypographyFontId('copy', settings.ui?.typography?.copy ?? '')) {
-    pushIssue('ui.typography.copy', '文案字体必须从注册表可选项中选择');
+    pushIssue('ui.typography.copy', 'Copy font must be one of the registered options.');
   }
 
   if (!isAdminTypographyFontId('mono', settings.ui?.typography?.mono ?? '')) {
-    pushIssue('ui.typography.mono', '等宽字体必须从注册表可选项中选择');
+    pushIssue('ui.typography.mono', 'Monospace font must be one of the registered options.');
   }
   if (!isAdminTypographyFontId('brand', settings.ui?.typography?.brand ?? '')) {
-    pushIssue('ui.typography.brand', '品牌字体必须从注册表可选项中选择');
+    pushIssue('ui.typography.brand', 'Brand font must be one of the registered options.');
   }
 
   const nav = Array.isArray(settings.shell.nav) ? settings.shell.nav : [];
   if (nav.length !== ADMIN_NAV_IDS.length) {
-    pushIssue('shell.nav', 'Sidebar 导航项数量必须与既有导航一致');
+    pushIssue('shell.nav', 'Sidebar navigation must contain the same number of items as the existing navigation.');
   }
 
   const seenIds = new Set<SidebarNavId>();
@@ -1145,22 +1145,22 @@ export const validateAdminThemeSettings = (
     const navId = ADMIN_NAV_IDS.includes(item.id) ? item.id : null;
     const basePath = navId ? `shell.nav.${navId}` : `shell.nav[${index}]`;
     if (!navId) {
-      pushIssue(`${basePath}.id`, `存在非法导航项 ID：${item.id}`);
+      pushIssue(`${basePath}.id`, `Invalid navigation item ID: ${item.id}`);
     } else if (seenIds.has(navId)) {
-      pushIssue(`${basePath}.id`, `导航项 ID 重复：${navId}`);
+      pushIssue(`${basePath}.id`, `Duplicate navigation item ID: ${navId}`);
     }
     if (navId) seenIds.add(navId);
 
     if (!item.label) {
-      pushIssue(`${basePath}.label`, `导航项 ${item.id} 的显示名称不能为空`);
+      pushIssue(`${basePath}.label`, `Navigation item ${item.id} display name is required.`);
     }
     if (item.ornament !== null) {
       if (typeof item.ornament !== 'string') {
-        pushIssue(`${basePath}.ornament`, `导航项 ${item.id} 的点缀必须是字符串或留空`);
+        pushIssue(`${basePath}.ornament`, `Navigation item ${item.id} ornament must be a string or left empty.`);
       } else if (item.ornament.includes('\n') || item.ornament.includes('\r')) {
-        pushIssue(`${basePath}.ornament`, `导航项 ${item.id} 的点缀只允许单行文本`);
+        pushIssue(`${basePath}.ornament`, `Navigation item ${item.id} ornament must be a single line.`);
       } else if (item.ornament.length > ADMIN_NAV_ORNAMENT_MAX_LENGTH) {
-        pushIssue(`${basePath}.ornament`, `导航项 ${item.id} 的点缀不能超过 ${ADMIN_NAV_ORNAMENT_MAX_LENGTH} 个字符`);
+        pushIssue(`${basePath}.ornament`, `Navigation item ${item.id} ornament must be no more than ${ADMIN_NAV_ORNAMENT_MAX_LENGTH} characters.`);
       }
     }
     if (
@@ -1168,12 +1168,12 @@ export const validateAdminThemeSettings = (
       item.order < ADMIN_NAV_ORDER_MIN ||
       item.order > ADMIN_NAV_ORDER_MAX
     ) {
-      pushIssue(`${basePath}.order`, `导航项 ${item.id} 的位置排序必须为 ${ADMIN_NAV_ORDER_MIN}-${ADMIN_NAV_ORDER_MAX} 的整数`);
+      pushIssue(`${basePath}.order`, `Navigation item ${item.id} position order must be an integer from ${ADMIN_NAV_ORDER_MIN} to ${ADMIN_NAV_ORDER_MAX}.`);
     } else if (navId && navOrderIssues.get(navId) === 'duplicate') {
-      pushIssue(`${basePath}.order`, `位置排序不能重复：${item.order}`);
+      pushIssue(`${basePath}.order`, `Position orders must be unique: ${item.order}`);
     }
     if (typeof item.visible !== 'boolean') {
-      pushIssue(`${basePath}.visible`, `导航项 ${item.id} 的 visible 必须是布尔值`);
+      pushIssue(`${basePath}.visible`, `Navigation item ${item.id} visible must be a boolean.`);
     }
   });
 
@@ -1472,7 +1472,7 @@ export const createAdminThemeSettingsCanonicalMismatchIssues = (
   const {
     mode = 'exact',
     pathPrefix = '',
-    messagePrefix = '配置值会在归一化后发生变化，请先修复原始输入'
+    messagePrefix = 'Configuration values would change after normalization; fix the original input first'
   } = options;
   const mismatchPaths = getAdminThemeSettingsMismatchPaths(actual, expected, mode);
   return mismatchPaths.map((path) => {
@@ -1481,7 +1481,7 @@ export const createAdminThemeSettingsCanonicalMismatchIssues = (
       : pathPrefix
         ? appendPathSegment(pathPrefix, path)
         : path;
-    return createValidationIssue(normalizedPath, `${messagePrefix}：${normalizedPath}`);
+    return createValidationIssue(normalizedPath, `${messagePrefix}: ${normalizedPath}`);
   });
 };
 

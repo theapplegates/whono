@@ -40,7 +40,7 @@ const siteTitle = settings.site.title;
 const brandTitle = settings.shell.brandTitle ?? siteTitle;
 const metaDescription = description ?? settings.site.description;
 const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-const htmlLang = settings.site.defaultLocale || 'zh-CN';
+const htmlLang = settings.site.defaultLocale || 'en';
 const footerStartYear = settings.site.footer.startYear;
 const footerShowCurrentYear = settings.site.footer.showCurrentYear;
 const footerCopyright = settings.site.footer.copyright;
@@ -61,7 +61,7 @@ const typographyApiFonts = selectedApiFonts.filter((font) =>
 );
 if (import.meta.env.DEV && typographyApiFonts.length !== selectedApiFonts.length) {
   console.warn(
-    '[fonts] ui.typography 选中的字体未注册于本次启动的 fonts 配置，已跳过 <Font> 渲染；重启 dev server 生效。'
+    '[fonts] A font selected in ui.typography was not registered in this startup configuration, so <Font> rendering was skipped; restart the dev server to apply.'
   );
 }
 const canonical = (hasSiteUrl && Astro.site)
@@ -208,7 +208,7 @@ const adminUiPrefsScriptHref = isDevAdminPage
     data-dev-ui={isDev ? 'true' : undefined}
     data-admin-dev={adminDevState}
   >
-    <a class="skip-link" href="#content">跳到内容</a>
+    <a class="skip-link" href="#content">Skip to content</a>
     <div class="shell" data-sidebar-divider={sidebarDividerVariant}>
       <Sidebar
         siteTitle={brandTitle}
@@ -230,8 +230,8 @@ const adminUiPrefsScriptHref = isDevAdminPage
       <button
         type="button"
         class="icon-button float-action scroll-top"
-        aria-label="回到顶部"
-        title="回到顶部"
+        aria-label="Back to top"
+        title="Back to top"
         aria-hidden="true"
         tabindex="-1"
       >

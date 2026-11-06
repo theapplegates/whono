@@ -15,23 +15,23 @@ const { footerStartYearMin, footerStartYearMax, socialCustomLimit } = Astro.prop
 ---
 
 <fieldset class="admin-section">
-  <legend class="admin-sr-only"><h2>站点设置</h2></legend>
+  <legend class="admin-sr-only"><h2>Site settings</h2></legend>
 
   <div class="admin-subsection">
     <div class="admin-fields admin-fields--2">
       <label class="admin-field">
-        <span class="admin-field__label">站点标题</span>
+        <span class="admin-field__label">Site title</span>
         <input class="admin-field__control" id="site-title" type="text" autocomplete="off" />
       </label>
       <label class="admin-field">
-        <span class="admin-field__label">站点语言</span>
+        <span class="admin-field__label">Site language</span>
         <input class="admin-field__control" id="site-default-locale" type="text" autocomplete="off" />
       </label>
     </div>
     <div class="admin-field">
       <div class="admin-field__head">
-        <AdminHelpTip id="site-description-tip" text="用于搜索结果与分享摘要。">
-          <label class="admin-field__label" for="site-description">默认 SEO 描述</label>
+        <AdminHelpTip id="site-description-tip" text="Used in search results and share summaries.">
+          <label class="admin-field__label" for="site-description">Default SEO description</label>
         </AdminHelpTip>
       </div>
       <textarea
@@ -45,11 +45,11 @@ const { footerStartYearMin, footerStartYearMax, socialCustomLimit } = Astro.prop
 
   <div class="admin-subsection" role="group" aria-labelledby="site-footer-title">
     <div class="admin-subsection__head">
-      <h3 id="site-footer-title" class="admin-subsection__title">页脚</h3>
+      <h3 id="site-footer-title" class="admin-subsection__title">Footer</h3>
     </div>
     <div class="admin-fields admin-fields--lead">
       <label class="admin-field">
-        <span class="admin-field__label">起始年份</span>
+        <span class="admin-field__label">Start year</span>
         <input
           class="admin-field__control"
           id="site-footer-start-year"
@@ -63,30 +63,30 @@ const { footerStartYearMin, footerStartYearMax, socialCustomLimit } = Astro.prop
         />
       </label>
       <label class="admin-field">
-        <span class="admin-field__label">版权文案</span>
+        <span class="admin-field__label">Copyright text</span>
         <input class="admin-field__control" id="site-footer-copyright" type="text" autocomplete="off" aria-describedby="site-footer-preview" />
       </label>
     </div>
     <AdminSettingSwitch id="site-footer-show-current-year" checked>
-      在起始年份后追加当前年份
-      <Fragment slot="description">开启后显示为“起始年份-{footerStartYearMax}”，每年自动更新。</Fragment>
+      Append the current year to the start year
+      <Fragment slot="description">When enabled, displays as “start year–{footerStartYearMax}” and updates automatically each year.</Fragment>
     </AdminSettingSwitch>
     <p id="site-footer-preview" class="admin-help admin-preview">
-      <span class="admin-preview__label">预览</span>
+      <span class="admin-preview__label">Preview</span>
       <span id="site-footer-preview-value" class="admin-preview__value">© {footerStartYearMax} Whono · Theme Demo · by cxro</span>
     </p>
   </div>
 
   <div class="admin-subsection" role="group" aria-labelledby="site-overview-title" data-reveal-scope>
     <div class="admin-subsection__head">
-      <h3 id="site-overview-title" class="admin-subsection__title">后台概览页</h3>
+      <h3 id="site-overview-title" class="admin-subsection__title">Admin overview page</h3>
     </div>
     <AdminSettingSwitch id="site-admin-overview-public-visible" checked inputAttrs={{ 'data-reveal-source': true }}>
-      公开 <code>/admin/</code> 概览页
-      <Fragment slot="description">访客可查看站点概览，不会被搜索引擎收录；关闭后该页只显示一段说明文字。构建后生效。</Fragment>
+      Make the <code>/admin/</code> overview public
+      <Fragment slot="description">Visitors can view the site overview, and search engines will not index it; when disabled, the page only shows a message. Applies after build.</Fragment>
     </AdminSettingSwitch>
     <label class="admin-field" data-reveal-when-off>
-      <span class="admin-field__label">关闭时显示的文字</span>
+      <span class="admin-field__label">Text shown when disabled</span>
       <input
         class="admin-field__control"
         id="site-admin-overview-hidden-message"
@@ -100,9 +100,9 @@ const { footerStartYearMin, footerStartYearMax, socialCustomLimit } = Astro.prop
 
   <div class="admin-subsection" role="group" aria-labelledby="site-favicon-title">
     <div class="admin-subsection__head">
-      <h3 id="site-favicon-title" class="admin-subsection__title">站点图标</h3>
+      <h3 id="site-favicon-title" class="admin-subsection__title">Site icons</h3>
     </div>
-    <p class="admin-subsection__desc">浏览器标签页与移动端主屏图标，构建后生效。</p>
+    <p class="admin-subsection__desc">Browser tab and mobile home screen icons. Applies after build.</p>
     <input id="site-favicon-svg" type="hidden" />
     <input id="site-favicon-png" type="hidden" />
     <input id="site-favicon-apple-touch-icon" type="hidden" />
@@ -112,17 +112,17 @@ const { footerStartYearMin, footerStartYearMax, socialCustomLimit } = Astro.prop
           <img alt="" loading="lazy" decoding="async" data-favicon-preview-img="png" />
         </span>
         <span class="admin-asset__text">
-          <span class="admin-asset__name">标签页图标</span>
-          <span class="admin-asset__meta">PNG，浏览器标签页与书签</span>
+          <span class="admin-asset__name">Favicon</span>
+          <span class="admin-asset__meta">PNG for browser tabs and bookmarks</span>
         </span>
         <span class="admin-asset__actions">
-          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-upload="png" aria-label="上传标签页图标">
+          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-upload="png" aria-label="Upload favicon">
             <AdminIcon name="upload" size={13} strokeWidth={2.2} />
-            <span>上传</span>
+            <span>Upload</span>
           </button>
-          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-clear="png" aria-label="恢复默认标签页图标">
+          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-clear="png" aria-label="Restore default favicon">
             <AdminIcon name="refresh" size={13} strokeWidth={2.2} />
-            <span>恢复默认</span>
+            <span>Restore default</span>
           </button>
         </span>
       </li>
@@ -131,17 +131,17 @@ const { footerStartYearMin, footerStartYearMax, socialCustomLimit } = Astro.prop
           <img alt="" loading="lazy" decoding="async" data-favicon-preview-img="appleTouchIcon" />
         </span>
         <span class="admin-asset__text">
-          <span class="admin-asset__name">触摸图标</span>
-          <span class="admin-asset__meta">PNG，添加到移动端主屏时使用</span>
+          <span class="admin-asset__name">Touch icon</span>
+          <span class="admin-asset__meta">PNG used when added to a mobile home screen</span>
         </span>
         <span class="admin-asset__actions">
-          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-upload="appleTouchIcon" aria-label="上传触摸图标">
+          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-upload="appleTouchIcon" aria-label="Upload touch icon">
             <AdminIcon name="upload" size={13} strokeWidth={2.2} />
-            <span>上传</span>
+            <span>Upload</span>
           </button>
-          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-clear="appleTouchIcon" aria-label="恢复默认触摸图标">
+          <button class="admin-btn admin-btn--ghost admin-btn--mini" type="button" data-favicon-clear="appleTouchIcon" aria-label="Restore default touch icon">
             <AdminIcon name="refresh" size={13} strokeWidth={2.2} />
-            <span>恢复默认</span>
+            <span>Restore default</span>
           </button>
         </span>
       </li>
@@ -149,7 +149,7 @@ const { footerStartYearMin, footerStartYearMax, socialCustomLimit } = Astro.prop
     <input type="file" accept="image/png" hidden data-favicon-file="png" />
     <input type="file" accept="image/png" hidden data-favicon-file="appleTouchIcon" />
     <p class="admin-help">
-      建议上传 256×256 的正方形 PNG（边长 16-512px，不超过 256KB）；SVG 图标请直接替换 <code>public/favicon.svg</code>。
+      Recommended: a square 256×256 PNG (16–512 px per side, up to 256 KB). To use an SVG icon, replace <code>public/favicon.svg</code> directly.
     </p>
   </div>
 

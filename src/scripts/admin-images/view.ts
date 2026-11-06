@@ -14,14 +14,14 @@ const escapeHtml = (value: string): string =>
     .replaceAll("'", '&#39;');
 
 const getOriginBadgeLabel = (origin: AdminImageBrowseItem['origin']): string => {
-  if (origin === 'public') return '公开资源';
-  if (origin === 'src/assets') return '站点素材';
-  if (origin === 'cloud') return '云端资源';
-  return '内容附件';
+  if (origin === 'public') return 'Public assets';
+  if (origin === 'src/assets') return 'Site assets';
+  if (origin === 'cloud') return 'Cloud assets';
+  return 'Content attachments';
 };
 
 const getSourceSectionLabel = (origin: AdminImageBrowseItem['origin']): string =>
-  origin === 'cloud' ? '云端图片' : '本地图片';
+  origin === 'cloud' ? 'Cloud images' : 'Local images';
 
 const getSourceSectionKey = (origin: AdminImageBrowseItem['origin']): 'cloud' | 'local' =>
   origin === 'cloud' ? 'cloud' : 'local';
@@ -49,9 +49,9 @@ const getMarkdownReference = (
     return { value: `![](${encodeMarkdownImageDestination(webPath)})` };
   }
   if (item.origin === 'src/content') {
-    return { disabledReason: '该图需在所属文章中使用相对路径引用' };
+    return { disabledReason: 'This image must be referenced with a relative path in its article.' };
   }
-  return { disabledReason: '站点素材需在代码中导入，暂不支持正文引用' };
+  return { disabledReason: 'Site assets must be imported in code; body references are not supported yet.' };
 };
 
 const getCardOverlayMetaText = (
@@ -186,7 +186,7 @@ export const renderSubgroupButtons = ({
   subgroupsEl.append(
     createChipButton(
       {
-        label: '全部',
+        label: 'All',
         count: getFilterOptionCount(subgroupOptions)
       },
       currentSubgroup.length === 0,
@@ -272,7 +272,7 @@ export const renderItems = ({
             <span class="admin-images-browser__thumb">
               ${item.previewSrc
             ? `<img src="${escapeHtml(item.previewSrc)}" alt="" loading="lazy" decoding="async" />`
-            : '<span class="admin-images-browser__thumb-fallback">暂无预览</span>'}
+            : '<span class="admin-images-browser__thumb-fallback">No preview</span>'}
               ${overlayMeta
             ? `
                   <span class="admin-images-browser__thumb-overlay" aria-hidden="true">
@@ -415,12 +415,12 @@ export const renderDetail = ({
 
   const dimensionsText = detailMeta?.width && detailMeta.height
     ? `${detailMeta.width} × ${detailMeta.height}`
-    : detailLoading ? '正在读取…' : detailError ? '读取失败' : '未读取';
+    : detailLoading ? 'Loading…' : detailError ? 'Failed to load' : 'Not loaded';
   const sizeText = detailMeta
     ? formatAdminImageBytes(detailMeta.size)
-    : detailLoading ? '正在读取…' : detailError ? '读取失败' : '未读取';
+    : detailLoading ? 'Loading…' : detailError ? 'Failed to load' : 'Not loaded';
   const typeText = detailMeta?.mimeType
-    ?? (detailLoading ? '正在读取…' : detailError ? '读取失败' : '未读取');
+    ?? (detailLoading ? 'Loading…' : detailError ? 'Failed to load' : 'Not loaded');
 
   const detailBadges = [
     `<span class="admin-images-browser__badge admin-images-browser__origin-badge" data-origin="${escapeHtml(item.origin)}">${escapeHtml(getOriginBadgeLabel(item.origin))}</span>`,
@@ -432,7 +432,7 @@ export const renderDetail = ({
       ? `<span class="admin-images-browser__badge">${escapeHtml(item.browseSubgroupLabel)}</span>`
       : '',
     detailMeta?.size && detailMeta.size >= largeFileThreshold
-      ? '<span class="admin-images-browser__badge">大文件</span>'
+      ? '<span class="admin-images-browser__badge">Large file</span>'
       : ''
   ]
     .filter(Boolean)
@@ -440,8 +440,8 @@ export const renderDetail = ({
 
   const hasPreferredValue = item.preferredValue && item.preferredValue !== item.path;
   const fieldValue = hasPreferredValue ? item.preferredValue! : item.path;
-  const fieldLabel = hasPreferredValue ? '可用值 (field-compatible)' : '文件路径';
-  const fieldCopyLabel = hasPreferredValue ? '可用值' : '文件路径';
+  const fieldLabel = hasPreferredValue ? 'Available value (field-compatible)' : 'File path';
+  const fieldCopyLabel = hasPreferredValue ? 'Available value' : 'File path';
   const markdownRef = getMarkdownReference(item);
   const previewSrc = detailMeta?.previewSrc ?? item.previewSrc;
 
@@ -451,7 +451,7 @@ export const renderDetail = ({
       <div class="admin-images-browser__detail-media">
         ${previewSrc
       ? `<img src="${escapeHtml(previewSrc)}" alt="${escapeHtml(item.fileName)}" loading="eager" decoding="async" />`
-      : '<div class="admin-images-browser__detail-fallback">无预览</div>'}
+      : '<div class="admin-images-browser__detail-fallback">No preview</div>'}
       </div>
 
       <div class="admin-images-browser__detail-body">
@@ -476,28 +476,28 @@ export const renderDetail = ({
               data-copy-value="${escapeHtml(fieldValue)}"
               data-copy-label="${escapeHtml(fieldCopyLabel)}"
               data-inline-feedback="true"
-              title="点击复制"
-              aria-label="复制${escapeHtml(fieldCopyLabel)}"
+              title="Click to copy"
+              aria-label="Copy ${escapeHtml(fieldCopyLabel)}"
             >${copyIcon}</button>
           </div>
         </div>
 
         <div class="admin-images-browser__detail-field">
           ${'value' in markdownRef
-        ? `<h4 class="admin-images-browser__detail-label">Markdown 引用</h4>
+        ? `<h4 class="admin-images-browser__detail-label">Markdown reference</h4>
           <div class="admin-images-browser__code-wrapper">
             <code class="admin-images-browser__detail-code">${escapeHtml(markdownRef.value)}</code>
             <button
               class="admin-btn admin-btn--tool admin-btn--compact admin-btn--icon admin-images-copy-btn"
               type="button"
               data-copy-value="${escapeHtml(markdownRef.value)}"
-              data-copy-label="Markdown 引用"
+              data-copy-label="Markdown reference"
               data-inline-feedback="true"
-              title="点击复制"
-              aria-label="复制 Markdown 引用"
+              title="Click to copy"
+              aria-label="Copy Markdown reference"
             >${copyIcon}</button>
           </div>`
-        : `<h4 class="admin-images-browser__detail-label admin-images-browser__detail-label--disabled">Markdown 引用</h4>
+        : `<h4 class="admin-images-browser__detail-label admin-images-browser__detail-label--disabled">Markdown reference</h4>
           <div class="admin-images-browser__code-wrapper admin-images-browser__code-wrapper--disabled" aria-disabled="true">
             <code class="admin-images-browser__detail-code">${escapeHtml(markdownRef.disabledReason)}</code>
           </div>`}
@@ -508,15 +508,15 @@ export const renderDetail = ({
             class="admin-btn admin-btn--primary"
             type="button"
             data-copy-value="${escapeHtml(item.path)}"
-            data-copy-label="资源路径"
+            data-copy-label="Asset path"
           >
             ${linkIcon}
-            复制资源路径
+            Copy asset path
           </button>
           ${previewSrc
         ? `<a class="admin-btn admin-btn--ghost" href="${escapeHtml(previewSrc)}" target="_blank" rel="noreferrer">
               ${eyeIcon}
-              浏览器新标签中打开
+              Open in new tab
             </a>`
         : ''}
         </div>

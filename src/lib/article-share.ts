@@ -19,27 +19,27 @@ export const getArticleShareLinks = (
   const encodedTitle = encodeURIComponent(title);
   const links: Record<ArticleShareLinkId, Omit<ArticleShareLink, 'id'>> = {
     x: {
-      label: '分享到 X',
+      label: 'Share on X',
       href: `https://x.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`
     },
     facebook: {
-      label: '分享到 Facebook',
+      label: 'Share on Facebook',
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
     },
     weibo: {
-      label: '分享到微博',
+      label: 'Share on Weibo',
       href: `https://service.weibo.com/share/share.php?url=${encodedUrl}&title=${encodedTitle}`
     },
     telegram: {
-      label: '分享到 Telegram',
+      label: 'Share on Telegram',
       href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`
     },
     linkedin: {
-      label: '分享到 LinkedIn',
+      label: 'Share on LinkedIn',
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`
     },
     email: {
-      label: '通过邮件分享',
+      label: 'Share via email',
       href: `mailto:?subject=${encodedTitle}&body=${encodedUrl}`
     }
   };

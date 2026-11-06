@@ -17,7 +17,7 @@ const SPACE_RE = /\s+/g;
 const TAG_KEY_RE = /[\s/\\?#%]+/g;
 const TRIM_DASH_RE = /^-+|-+$/g;
 const NON_ROUTABLE_TAG_KEY_RE = /[\s/\\?#%]/;
-const TAG_LABEL_COLLATOR = new Intl.Collator('zh-CN', {
+const TAG_LABEL_COLLATOR = new Intl.Collator('en', {
   sensitivity: 'variant',
   numeric: true
 });

@@ -1,86 +1,86 @@
 ---
-title: Markdown 排版指南
-description: 展示所有 Markdown 格式效果，包括标题、列表、代码、表格、引用等
+title: Markdown Typography Guide
+description: Showcases all Markdown formatting effects, including headings, lists, code, tables, quotes, and more
 date: 2026-01-15
 updatedAt: 2026-11-05
-badge: 示例
-tags: [ "Markdown", "排版"]
+badge: Example
+tags: [ "Markdown", "Typography" ]
 draft: false
 ---
 
-这篇文章展示了本主题支持的所有 Markdown 排版效果。
+This article demonstrates all the Markdown formatting effects supported by this theme.
 
-第一段……（用于列表预览）
+First paragraph… (used for list preview)
 <!-- more -->
-后续正文……
+Subsequent body text…
 
-## 文本格式
+## Text formatting
 
-这是一段普通文本。**这是粗体文字**，*这是斜体文字*，***这是粗斜体***。你也可以使用 ~~删除线~~ 来标记废弃内容。
+This is a paragraph of regular text. **This is bold text**, *this is italic text*, and ***this is bold italic***. You can also use ~~strikethrough~~ to mark deprecated content.
 
-行内代码使用反引号包裹：`const hello = 'world'`，非常适合标记变量名或命令。
+Inline code is wrapped in backticks: `const hello = 'world'`, which is great for marking variable names or commands.
 
-## 引用
+## Blockquotes
 
-> 设计的价值不止于建造完成。好的设计应该能够经受时间的考验，在岁月流转中依然保持其独特的魅力与实用性。
+> The value of design goes beyond completion. Good design should stand the test of time, retaining its unique charm and practicality as the years pass.
 
-你也可以使用多段引用：
+You can also use multi-paragraph quotes:
 
-> 第一段引用内容。
+> First paragraph of the quote.
 >
-> 第二段引用内容，展示多段落效果。
+> Second paragraph of the quote, demonstrating the multi-paragraph effect.
 
-来源标注（`<cite>` 放在 blockquote 内最后一行）：
+Source attribution (`<cite>` on the last line inside a blockquote):
 
-> 设计的价值不止于建造完成。
+> The value of design goes beyond completion.
 >
 > <cite>— Dieter Rams</cite>
 
-Pullquote（使用 `blockquote.pullquote` 变体）：
+Pullquote (using the `blockquote.pullquote` variant):
 
 <blockquote class="pullquote">
-  你那么憎恨那些人，跟他们斗了那么久，最终却变得和他们一样。人世间没有任何理想值得以这样的沉沦为代价。
-  <cite>— 百年孤独</cite>
+  You hated those people so much and fought them for so long, and in the end you became just like them. There is no ideal in this world worth such degradation.
+  <cite>— One Hundred Years of Solitude</cite>
 </blockquote>
 
-## 提示块（Callout）
+## Callouts
 
-支持 `note / tip / info / warning` 四种语法糖。下面先给一个最小写法；如需更精细控制，也可以直接写 HTML。
+Supports four syntax sugar types: `note / tip / info / warning`. Below is a minimal example; if you need finer control, you can also write HTML directly.
 
 ~~~md
-:::note[标题]
-这是正文。
+:::note[Title]
+This is the body text.
 :::
 ~~~
 
-如需直接写 HTML（更精确控制）：
+To write HTML directly (for more precise control):
 
 ~~~html
 <div class="callout note">
-  <p class="callout-title" data-icon="none">标题</p>
-  <p>这是正文。</p>
+  <p class="callout-title" data-icon="none">Title</p>
+  <p>This is the body text.</p>
 </div>
 ~~~
 
-说明：
-- 默认图标由类型决定，不需要 `<span class="callout-icon">`。
-- 隐藏图标用 `data-icon="none"`，写在 `.callout-title` 上。
-- 自定义图标可用 `data-icon="✨"`（可选）。
+Notes:
+- The default icon is determined by type; `<span class="callout-icon">` is not needed.
+- Hide the icon with `data-icon="none"` on `.callout-title`.
+- Custom icons can use `data-icon="✨"` (optional).
 
-### 语法糖变体示例（Callout）
+### Syntax sugar variant examples (Callout)
 
-这一组示例主要展示不同类型、标题形式与内容结构在前端的实际样式。
+This set of examples mainly shows how different types, title formats, and content structures actually look on the front end.
 
 :::note
-这是无标题示例。
+This is an example without a title.
 :::
 
-:::note[带标题]
-这是普通段落正文。
+:::note[With title]
+This is a regular paragraph.
 :::
 
 :::tip[Tip]
-可以包含行内代码 `npm run dev`、强调文本和 [链接](https://astro.build)。
+Can include inline code `npm run dev`, emphasized text, and a [link](https://astro.build).
 :::
 
 :::info[Info]
@@ -90,95 +90,95 @@ const hello = 'world';
 :::
 
 :::warning[Warning]
-> 也可以包含引用块。
+> Can also include blockquotes.
 >
-> 也可以换成多段内容。
+> Or switch to multiple paragraphs.
 :::
 
-基础语法如下：
+The basic syntax is as follows:
 
 ~~~text
-:::type[可选标题]
-正文内容
+:::type[Optional title]
+Body content
 :::
 ~~~
 
-提示块仅支持 `note / tip / info / warning`；`details`、`spoiler` 另有用途（见下一节），其他不支持的类型（如 `:::foo[...]`）会降级为 `note`。
+Callouts support only `note / tip / info / warning`; `details` and `spoiler` serve other purposes (see the next section), and other unsupported types (such as `:::foo[...]`) fall back to `note`.
 
-## 高亮、模糊与折叠
+## Highlight, spoiler, and collapse
 
-用 `==文本==` 标出重点：这是==需要读者留意的一句话==。
+Use `==text==` to mark key points: this is ==a sentence readers should pay attention to==.
 
-用 `:spoiler[文本]` 遮住剧透，点击后显示：故事的结局是:spoiler[他一直都在原地等待]。整段内容可以用块写法：
+Use `:spoiler[text]` to hide spoilers, revealed on click: the story's ending is that :spoiler[he was always waiting right there]. Entire paragraphs can use the block form:
 
 :::spoiler
-这一整段在点击前都是模糊的，适合藏起答案、彩蛋或剧情转折。
+This entire paragraph is blurred until clicked, suitable for hiding answers, easter eggs, or plot twists.
 :::
 
-用 `:::details[标题]` 折叠次要内容，读者需要时再展开：
+Use `:::details[title]` to collapse secondary content that readers can expand when needed:
 
-:::details[什么时候适合用折叠内容？]
-常见问题、补充说明或较长的示例，都可以先收起来，让正文更好读。
+:::details[When is collapsed content appropriate?]
+FAQs, supplementary notes, or longer examples can all be tucked away to make the body easier to read.
 :::
 
-:::details[默认展开的折叠内容]{open}
-在标题后加 `{open}`，页面打开时就是展开状态。
+:::details[Collapsed content expanded by default]{open}
+Add `{open}` after the title, and it will be expanded when the page opens.
 :::
 
-写法汇总：
+Syntax summary:
 
 ~~~md
-==高亮文本==
+==Highlighted text==
 
-:spoiler[行内模糊]
+:spoiler[Inline spoiler]
 
 :::spoiler
-整段模糊
+Entire paragraph blurred
 :::
 
-:::details[标题]{open}
-折叠内容
+:::details[Title]{open}
+Collapsed content
 :::
 ~~~
 
-说明：
-- 模糊只用来防剧透，查看网页源码仍能看到原文，不要用它存放密码等敏感信息；模糊的内容不会出现在文章摘要和搜索结果里。
-- `==` 两侧紧贴英文字母或数字时（如 `a==b`）不会变成高亮，代码请放进反引号。
-- 絮语卡片支持高亮和模糊；超过 180 字的絮语只显示纯文本摘要，高亮不显示，模糊内容显示为「[隐藏内容]」。
+Notes:
+- Spoilers are only for avoiding spoilers; the original text is still visible in the page source, so do not use them for sensitive information such as passwords. Spoiler content does not appear in article excerpts or search results.
+- When `==` is directly adjacent to English letters or digits (such as `a==b`), it will not become a highlight; put code in backticks.
+- Bits cards support highlights and spoilers; Bits longer than 180 characters show only a plain-text excerpt, highlights are not displayed, and spoiler content is shown as "[Hidden content]".
 
-## 列表
+## Lists
 
-### 无序列表
+### Unordered list
 
-- 第一项
-- 第二项
-  - 嵌套项 A
-  - 嵌套项 B
-- 第三项
+- First item
+- Second item
+  - Nested item A
+  - Nested item B
+- Third item
 
-### 有序列表
+### Ordered list
 
-1. 准备工作
-2. 安装依赖
-3. 运行项目
-   1. 开发模式
-   2. 生产构建
+1. Preparation
+2. Install dependencies
+3. Run the project
+   1. Development mode
+   2. Production build
 
-### 任务列表
+### Task list
 
-- [x] 完成设计稿
-- [x] 开发首页
-- [ ] 编写文档
-- [ ] 发布上线
+- [x] Complete the design draft
+- [x] Develop the home page
+- [ ] Write documentation
+- [ ] Launch
 
-## 代码块
+## Code blocks
 
-以下代码块用于展示工具栏（语言/行数/复制按钮）与行号（默认开启）。
+The following code blocks demonstrate the toolbar (language / line count / copy button) and line numbers (enabled by default).
 
 ### JavaScript
 
 ```javascript
-// 一个简单的 Astro 组件示例
+// A simple Astro component example
 const greeting = 'Hello, World!';
 
 function fibonacci(n) {
@@ -193,7 +193,7 @@ console.log(fibonacci(10)); // 55
 
 ```python
 def quick_sort(arr):
-    """快速排序算法实现"""
+    """Quicksort implementation"""
     if len(arr) <= 1:
         return arr
     
@@ -204,7 +204,7 @@ def quick_sort(arr):
     
     return quick_sort(left) + middle + quick_sort(right)
 
-# 使用示例
+# Usage example
 numbers = [3, 6, 8, 10, 1, 2, 1]
 print(quick_sort(numbers))
 ```
@@ -225,97 +225,97 @@ print(quick_sort(numbers))
 ### Shell
 
 ```bash
-# 安装依赖并启动开发服务器
+# Install dependencies and start the development server
 npm install
 npm run dev
 
-# 构建生产版本
+# Build the production version
 npm run build
 ```
 
-## 表格
+## Tables
 
-| 功能 | 状态 | 说明 |
+| Feature | Status | Notes |
 |:----:|:----:|:----:|
-| 响应式布局 | ✅ | 完美适配移动端 |
-| 暗色模式 | 🚧 | 开发中 |
-| RSS 订阅 | ✅ | 支持多 Feed |
-| 国际化 | ❌ | 计划中 |
+| Responsive layout | ✅ | Fully adapted for mobile |
+| Dark mode | 🚧 | In development |
+| RSS subscription | ✅ | Supports multiple feeds |
+| Internationalization | ❌ | Planned |
 
-## 链接与图片
+## Links and images
 
-这是一个 [外部链接](https://astro.build)，会在新标签页打开。
+This is an [external link](https://astro.build); it opens in a new tab.
 
 ### Figure / Caption
 
-**案例 A：img + figcaption**
+**Case A: img + figcaption**
 
 <figure class="figure">
-  <img src="/images/archive/demo-archive-01.webp" alt="图注示例图片 1" />
-  <figcaption class="figure-caption">图注示例：这是图片的说明文字。</figcaption>
+  <img src="/images/archive/demo-archive-01.webp" alt="Figure caption example image 1" />
+  <figcaption class="figure-caption">Figure caption example: this is the image's descriptive text.</figcaption>
 </figure>
 
-**案例 B：无 figcaption**
+**Case B: no figcaption**
 
 <figure class="figure">
-  <img src="/images/archive/demo-archive-02.webp" alt="无图注示例" />
+  <img src="/images/archive/demo-archive-02.webp" alt="No caption example" />
 </figure>
 
-**案例 C：picture + figcaption（可选）**
+**Case C: picture + figcaption (optional)**
 
 <figure class="figure">
   <picture>
     <source srcset="/images/archive/demo-archive-03.webp" type="image/webp" />
-    <img src="/images/archive/demo-archive-02.webp" alt="图注示例图片 2" />
+    <img src="/images/archive/demo-archive-02.webp" alt="Figure caption example image 2" />
   </picture>
-  <figcaption class="figure-caption">图注示例：picture 的说明文字。</figcaption>
+  <figcaption class="figure-caption">Figure caption example: descriptive text for picture.</figcaption>
 </figure>
 
-> 说明：当前样式下 `img` 与 `picture` 视觉一致。`picture` 主要用于给同一张图准备多个“备用版本”，浏览器将自动选最合适的那张（如手机小图、电脑大图，或优先用 WebP/AVIF）。不需要自动选版本时，用 `img` 就行。
+> Note: under the current styles, `img` and `picture` look identical. `picture` is mainly used to prepare multiple "alternate versions" of the same image, and the browser automatically picks the most suitable one (for example, a small image on phones and a large image on desktop, or preferring WebP/AVIF). When you do not need automatic version selection, just use `img`.
 
 ### Gallery
 
-**案例：两图排版（含可选 figcaption）**
+**Case: two-image layout (with optional figcaption)**
 
 <ul class="gallery">
   <li>
     <figure>
-      <img src="/images/archive/demo-archive-01.webp" alt="画廊示例 1" />
-      <figcaption>第一张图注（可选）</figcaption>
+      <img src="/images/archive/demo-archive-01.webp" alt="Gallery example 1" />
+      <figcaption>First image caption (optional)</figcaption>
     </figure>
   </li>
   <li>
     <figure>
-      <img src="/images/archive/demo-archive-02.webp" alt="画廊示例 2" />
-      <figcaption>第二张图注（可选）</figcaption>
+      <img src="/images/archive/demo-archive-02.webp" alt="Gallery example 2" />
+      <figcaption>Second image caption (optional)</figcaption>
     </figure>
   </li>
 </ul>
 
-## 分割线
+## Horizontal rule
 
-上方是一些内容。
+Some content above.
 
 ---
 
-下方是另一些内容。
+Some other content below.
 
-## 数学与特殊字符
+## Math and special characters
 
-常用数学符号：π ≈ 3.14159，e ≈ 2.71828
+Common mathematical symbols: π ≈ 3.14159, e ≈ 2.71828
 
-特殊字符：© 2026 · ™ · ® · € · £ · ¥ · → · ← · ↑ · ↓
+Special characters: © 2026 · ™ · ® · € · £ · ¥ · → · ← · ↑ · ↓
 
-## 英文段落
+## English paragraphs
 
 > The best way to predict the future is to invent it. — Alan Kay
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
 
-## 混合排版
+## Mixed formatting
 
-这是一段包含 **粗体**、*斜体*、`代码` 和 [链接](/) 的混合排版文本。你可以在一个段落中自由组合这些元素，创造丰富的阅读体验。
+This is a mixed-formatting paragraph containing **bold**, *italic*, `code`, and a [link](/). You can freely combine these elements within a paragraph to create a richer reading experience.
 
 ---
 
-以上就是本主题支持的所有 Markdown 格式。如果你发现任何渲染问题，欢迎提交 Issue！
+That covers all the Markdown formats supported by this theme. If you find any rendering issues, feel free to submit an Issue!

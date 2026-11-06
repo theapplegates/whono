@@ -92,18 +92,18 @@ const createResults = (details: WriteResultDetails = createEmptyWriteResultDetai
 const extractWriteInput = (body: unknown): WriteInput => {
   if (!isRecord(body)) {
     return {
-      errors: ['请求体必须是 JSON 对象']
+      errors: ['Request body must be a JSON object']
     };
   }
 
   const errors: string[] = [];
   const revision = typeof body.revision === 'string' ? body.revision.trim() : '';
   if (!revision) {
-    errors.push('请求体缺少 revision');
+    errors.push('Request body is missing revision');
   }
 
   if (!Object.prototype.hasOwnProperty.call(body, 'settings')) {
-    errors.push('请求体缺少 settings 字段');
+    errors.push('Request body is missing the settings field');
   }
 
   return {
@@ -132,7 +132,7 @@ const validateIncomingSettingsSnapshot = (
 } => {
   if (!isRecord(settingsInput)) {
     return {
-      errors: ['settings 必须是 JSON 对象'],
+      errors: ['settings must be a JSON object'],
       issues: []
     };
   }
@@ -148,7 +148,7 @@ const validateIncomingSettingsSnapshot = (
     }),
     ...createAdminThemeSettingsCanonicalMismatchIssues(compatibleSettingsInput, canonicalSettings, {
       mode: 'exact',
-      messagePrefix: '配置必须以完整 canonical snapshot 提交'
+      messagePrefix: 'Configuration must be submitted as a complete canonical snapshot'
     })
   ];
 
@@ -208,7 +208,7 @@ export const POST: APIRoute = async ({ request, url }) => {
   }
 
   const isDryRun = isAdminDryRunRequest(url);
-  const requestError = validateAdminJsonWriteRequest(request, url, 'Theme Console 配置');
+  const requestError = validateAdminJsonWriteRequest(request, url, 'Theme Console settings');
   if (requestError) {
     return new Response(
       JSON.stringify(
@@ -225,7 +225,7 @@ export const POST: APIRoute = async ({ request, url }) => {
   }
 
   const bodyResult = await readAdminJsonRequestBody(request, {
-    emptyBodyError: '请求体为空，请确认前端请求地址未发生重定向且已发送 JSON 字符串',
+    emptyBodyError: 'Request body is empty. Make sure the frontend request URL was not redirected and a JSON string was sent.',
     parseTrimmedBody: true
   });
   if (!bodyResult.ok) {
@@ -283,7 +283,7 @@ export const POST: APIRoute = async ({ request, url }) => {
         JSON.stringify(
           {
             ok: false,
-            errors: ['检测到配置已在外部更新，已拒绝覆盖并同步最新配置，请确认后再保存'],
+            errors: ['Configuration was updated externally. The overwrite was rejected and the latest configuration was synced. Review it before saving again'],
             results: createResults(),
             payload: latestEditableState.payload
           },
@@ -365,7 +365,7 @@ export const POST: APIRoute = async ({ request, url }) => {
           JSON.stringify(
             {
               ok: false,
-              errors: ['配置文件已写入，但重新读取 settings JSON 失败，请先修复损坏文件后再刷新后台'],
+              errors: ['The configuration file was written, but settings JSON could not be re-read. Fix the corrupted file, then refresh the admin console'],
               results
             },
             null,
@@ -393,7 +393,7 @@ export const POST: APIRoute = async ({ request, url }) => {
         JSON.stringify(
           {
             ok: false,
-            errors: ['写入配置文件失败，请检查本地文件权限或日志'],
+            errors: ['Failed to write the configuration file. Check local file permissions or logs'],
             results
           },
           null,

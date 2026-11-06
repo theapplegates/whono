@@ -66,11 +66,11 @@ describe.each(renderers)('markdown content syntax (%s)', (_name, render) => {
     expect(await render(':::details[默认展开]{open}\n答案\n:::')).toBe(
       '<details open><summary>默认展开</summary><p>答案</p></details>'
     );
-    expect(await render(':::details\n答案\n:::')).toBe('<details><summary>详情</summary><p>答案</p></details>');
+    expect(await render(':::details\n答案\n:::')).toBe('<details><summary>Details</summary><p>答案</p></details>');
   });
 
   it('renders spoiler directives as focusable blurred elements', async () => {
-    const attrs = 'role="button" tabindex="0" aria-label="隐藏内容，点击显示" title="点击显示"';
+    const attrs = 'role="button" tabindex="0" aria-label="Hidden content, click to reveal" title="Click to reveal"';
 
     expect(await render('结局是 :spoiler[他 **活下来** 了]。')).toBe(
       `<p>结局是 <span class="spoiler" ${attrs}>他 <strong>活下来</strong> 了</span>。</p>`

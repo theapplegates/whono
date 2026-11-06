@@ -17,31 +17,31 @@ const {
 
 // 占位文字即留空时页面上显示的默认标题；没有默认副标题的显示「无」。
 const pageTitleRows = [
-  { id: 'essay', path: '/essay/', titlePlaceholder: '随笔', subtitlePlaceholder: '随笔与杂记' },
-  { id: 'bits', path: '/bits/', titlePlaceholder: '絮语', subtitlePlaceholder: '生活不只是长篇' },
-  { id: 'memo', path: '/memo/', titlePlaceholder: memoTitlePlaceholder || undefined, subtitlePlaceholder: memoSubtitlePlaceholder || '无' },
-  { id: 'archive', path: '/archive/', titlePlaceholder: '归档', subtitlePlaceholder: '按年份分组的归档目录' },
-  { id: 'about', path: '/about/', titlePlaceholder: '关于', subtitlePlaceholder: '无' }
+  { id: 'essay', path: '/essay/', titlePlaceholder: 'Essays', subtitlePlaceholder: 'Essays and miscellany' },
+  { id: 'bits', path: '/bits/', titlePlaceholder: 'Bits', subtitlePlaceholder: 'Life is more than long reads' },
+  { id: 'memo', path: '/memo/', titlePlaceholder: memoTitlePlaceholder || undefined, subtitlePlaceholder: memoSubtitlePlaceholder || 'None' },
+  { id: 'archive', path: '/archive/', titlePlaceholder: 'Archive', subtitlePlaceholder: 'Archive index grouped by year' },
+  { id: 'about', path: '/about/', titlePlaceholder: 'About', subtitlePlaceholder: 'None' }
 ] as const;
 ---
 
 <fieldset class="admin-section">
-  <legend class="admin-sr-only"><h2>页面设置</h2></legend>
+  <legend class="admin-sr-only"><h2>Page settings</h2></legend>
 
   <div class="admin-subsection" role="group" aria-labelledby="page-titles-title" aria-describedby="page-titles-tip">
     <div class="admin-subsection__head">
       <h3 id="page-titles-title" class="admin-subsection__title">
         <AdminHelpTip
           id="page-titles-tip"
-          text="填写后覆盖页面标题；留空时使用灰色的默认值（/memo/ 读取 src/content/memo/index.md）。"
-        >页面标题</AdminHelpTip>
+          text="Overrides each page title when set; leave blank to use the gray default (/memo/ reads src/content/memo/index.md)."
+        >Page titles</AdminHelpTip>
       </h3>
     </div>
     <div class="admin-table">
       <div class="admin-table__head admin-page-header" aria-hidden="true">
-        <span>页面</span>
-        <span class="admin-page-header__center">主标题</span>
-        <span class="admin-page-header__input">副标题</span>
+        <span>Page</span>
+        <span class="admin-page-header__center">Main title</span>
+        <span class="admin-page-header__input">Subtitle</span>
       </div>
       {
         pageTitleRows.map((row) => (
@@ -55,7 +55,7 @@ const pageTitleRows = [
                 maxlength={pageTitleMaxLength}
                 autocomplete="off"
                 placeholder={row.titlePlaceholder}
-                aria-label={`${row.path} 页面主标题`}
+                aria-label={`${row.path} page main title`}
               />
             </span>
             <span class="admin-page-cell admin-page-cell--subtitle admin-field--compact">
@@ -66,7 +66,7 @@ const pageTitleRows = [
                 maxlength={pageSubtitleMaxLength}
                 autocomplete="off"
                 placeholder={row.subtitlePlaceholder}
-                aria-label={`${row.path} 页面副标题`}
+                aria-label={`${row.path} page subtitle`}
               />
             </span>
           </div>
@@ -77,18 +77,18 @@ const pageTitleRows = [
 
   <div class="admin-subsection" role="group" aria-labelledby="page-bits-author-title">
     <div class="admin-subsection__head">
-      <h3 id="page-bits-author-title" class="admin-subsection__title">/bits/ 默认作者</h3>
+      <h3 id="page-bits-author-title" class="admin-subsection__title">/bits/ default author</h3>
     </div>
     <div class="admin-media admin-media--compact">
       <div class="admin-media__fields">
         <label class="admin-field">
-          <span class="admin-field__label">作者名</span>
+          <span class="admin-field__label">Author name</span>
           <input class="admin-field__control" id="page-bits-author-name" type="text" autocomplete="off" />
         </label>
         <div class="admin-field">
           <div class="admin-field__head">
-            <AdminHelpTip id="page-bits-author-avatar-tip" text="填写图片的相对路径，或点「选择」从本地图片中挑选。">
-              <label class="admin-field__label" for="page-bits-author-avatar">头像</label>
+            <AdminHelpTip id="page-bits-author-avatar-tip" text="Enter a relative image path, or click Choose to pick a local image.">
+              <label class="admin-field__label" for="page-bits-author-avatar">Avatar</label>
             </AdminHelpTip>
           </div>
           <div class="admin-images-field-input">
@@ -103,15 +103,15 @@ const pageTitleRows = [
               class="admin-btn admin-btn--ghost"
               type="button"
               data-admin-images-open="page.bits.defaultAuthor.avatar"
-              aria-label="选择 Bits 默认头像"
+              aria-label="Choose default Bits avatar"
             >
-              选择
+              Choose
             </button>
           </div>
         </div>
       </div>
       <div class="admin-media__preview">
-        <span class="admin-field__label">预览</span>
+        <span class="admin-field__label">Preview</span>
         <div
           class="admin-images-field-preview admin-images-field-preview--avatar"
           data-admin-images-preview="page.bits.defaultAuthor.avatar"
